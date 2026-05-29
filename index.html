@@ -402,7 +402,7 @@
                     <p class="text-gray-400 mb-8">
                         Recebemos as suas informações. Um especialista em negócios corporativos entrará em contacto em breve para apresentar os detalhes do Betim Trade Center.
                     </p>
-                    <a href="https://wa.me/5531986089802?text=Olá,%20registei-me%20na%20página%20do%20Betim%20Trade%20Center%20e%20gostaria%20de%20mais%20informações." target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold py-4 px-8 rounded-sm hover:bg-[#20b858] transition-colors w-full justify-center">
+                    <a id="whatsapp-link" href="#" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold py-4 px-8 rounded-sm hover:bg-[#20b858] transition-colors w-full justify-center">
                         <i data-lucide="message-circle" class="w-5 h-5"></i>
                         Falar Agora pelo WhatsApp
                     </a>
@@ -581,6 +581,23 @@
         function submitLead() {
             // Aqui entra o código para enviar os dados para o RD Station, CRM, etc.
             console.log("Lead a ser enviado:", formData);
+            
+            // Construir a mensagem dinâmica do WhatsApp
+            const numeroWhatsApp = "5531986089802";
+            const textoMensagem = `Olá, acabei de me registar na página do Betim Trade Center e gostaria de mais informações.
+            
+*Os meus dados:*
+- *Nome:* ${formData.nome}
+- *WhatsApp:* ${formData.whatsapp}
+- *E-mail:* ${formData.email}
+- *Objetivo:* ${formData.objetivo}
+- *Investimento Estimado:* ${formData.investimento}`;
+
+            // Codificar o texto para formato URL (converte quebras de linha e espaços)
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoMensagem)}`;
+            
+            // Atualizar o botão final com o novo link
+            document.getElementById('whatsapp-link').href = urlWhatsApp;
             
             // Ir para a tela de Sucesso
             setTimeout(() => {
