@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betim Trade Center - Oportunidade Exclusiva</title>
+    
+    <!-- Google Fonts: Montserrat (Corpo) e Playfair Display (Títulos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuração do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B1728',
+                        secondary: '#070F1A',
+                        accent: '#C2A676',
+                        accentHover: '#D4B887',
+                        textLight: '#E2E8F0',
+                        textMuted: '#94A3B8'
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #070F1A;
+            color: #E2E8F0;
+        }
+        
+        ::selection {
+            background-color: #C2A676;
+            color: #0B1728;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Ocultar elementos */
+        .hidden-step {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased overflow-x-hidden">
+
+    <!-- HEADER FIXO -->
+    <header id="main-header" class="fixed top-0 w-full z-40 transition-all duration-300 py-6 bg-transparent">
+        <div class="container mx-auto px-6 flex justify-between items-center max-w-6xl">
+            <!-- Logo e Nome da Empresa -->
+            <div class="flex items-center gap-3">
+                <img src="https://github.com/lucasfpereira2-wq/bom-negocio/raw/main/logobomnegocios.png" alt="Bom Negócio Imóveis" class="h-10 md:h-14 object-contain" onerror="this.src='image_bbc079.png'; this.onerror=null;" />
+                <span class="text-white font-serif font-bold text-lg md:text-xl tracking-wide leading-tight">Bom Negócio Imóveis<br><span class="text-accent text-sm md:text-base"></span></span>
+            </div>
+            <button onclick="openForm()" class="hidden md:flex items-center gap-2 text-sm font-semibold tracking-wider uppercase border border-accent text-accent hover:bg-accent hover:text-primary px-6 py-2 rounded-full transition-all duration-300">
+                Acesso Antecipado
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 px-6 overflow-hidden">
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 z-0 bg-gradient-to-br from-primary via-secondary to-black opacity-90"></div>
+        
+        <!-- Subtle animated glowing orb -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto max-w-4xl relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-semibold uppercase tracking-widest mb-8">
+                <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                <span>Oportunidade Comercial em Betim</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-serif font-bold leading-tight mb-6 text-white">
+                O seu próximo <span class="text-accent italic">grande investimento</span> pode estar aqui.
+            </h1>
+            
+            <p class="text-lg md:text-xl text-textMuted max-w-2xl mx-auto mb-10 leading-relaxed">
+                Conheça a oportunidade que está a atrair empresários e investidores que procuram valorização sólida e localização estratégica em Betim.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openForm()" class="w-full sm:w-auto bg-accent text-secondary hover:bg-accentHover font-bold text-lg px-8 py-4 rounded-sm transition-all duration-300 shadow-[0_0_20px_rgba(194,166,118,0.3)] hover:shadow-[0_0_30px_rgba(194,166,118,0.5)] flex items-center justify-center gap-2">
+                    Quero Receber Informações Exclusivas
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <p class="mt-6 text-sm text-textMuted flex items-center justify-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-accent"></i>
+                Análise antecipada disponível por tempo limitado.
+            </p>
+        </div>
+    </section>
+
+    <!-- GATILHO DE QUALIFICAÇÃO -->
+    <section class="py-20 bg-primary relative border-t border-accent/10">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Esta oportunidade é para si?</h2>
+                <div class="w-16 h-1 bg-accent mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+                <!-- Beneficios injetados estaticamente para HTML -->
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Procura investir em património sólido e tangível.</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Procura valorização acima da média a longo prazo.</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Deseja ter presença numa região comercial estratégica.</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Procura identificar oportunidades antes da alta procura.</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Pensa como investidor e avalia o potencial futuro.</p>
+                </div>
+                <div class="flex items-start gap-4 p-5 rounded-lg bg-secondary/50 border border-accent/10 hover:border-accent/30 transition-colors">
+                    <i data-lucide="check-circle" class="text-accent shrink-0 mt-0.5 w-6 h-6"></i>
+                    <p class="text-gray-300">Quer diversificar capital num mercado seguro.</p>
+                </div>
+            </div>
+            
+            <div class="text-center bg-accent/10 border border-accent/20 p-8 rounded-lg max-w-3xl mx-auto">
+                <p class="text-xl text-white mb-6">
+                    Se marcou pelo menos <strong class="text-accent">3 itens</strong>, vale a pena conhecer este projeto de perto.
+                </p>
+                <button onclick="openForm()" class="border border-accent text-accent hover:bg-accent hover:text-primary font-bold py-3 px-8 rounded transition-all duration-300">
+                    Ver Disponibilidade e Detalhes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOCO DE DOR E OPORTUNIDADE (TIMELINE) -->
+    <section class="py-24 bg-secondary">
+        <div class="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center gap-16">
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-6 leading-tight">
+                    Enquanto muitos esperam, investidores atentos <span class="text-accent">posicionam-se.</span>
+                </h2>
+                <p class="text-gray-400 mb-6 text-lg leading-relaxed">
+                    O desenvolvimento urbano não espera. Áreas com potencial estratégico em Betim estão a ser rapidamente absorvidas pelo mercado corporativo.
+                </p>
+                <p class="text-gray-400 mb-8 text-lg leading-relaxed">
+                    Posicionar-se antes da consolidação total é o diferencial entre comprar um imóvel e realizar um investimento altamente lucrativo.
+                </p>
+            </div>
+            
+            <div class="md:w-1/2 w-full relative">
+                <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-accent/20"></div>
+                <div class="space-y-10 relative">
+                    
+                    <div class="relative pl-16">
+                        <div class="absolute left-[23px] top-1 w-3 h-3 bg-accent rounded-full ring-4 ring-secondary shadow-[0_0_10px_#C2A676]"></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Hoje</h3>
+                        <p class="text-gray-400">Acesso a condições exclusivas de entrada e escolha privilegiada de lotes.</p>
+                    </div>
+
+                    <div class="relative pl-16">
+                        <div class="absolute left-[23px] top-1 w-3 h-3 bg-accent rounded-full ring-4 ring-secondary shadow-[0_0_10px_#C2A676]"></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Desenvolvimento</h3>
+                        <p class="text-gray-400">Início da implantação de infraestrutura e atração de empresas âncora.</p>
+                    </div>
+
+                    <div class="relative pl-16">
+                        <div class="absolute left-[23px] top-1 w-3 h-3 bg-accent rounded-full ring-4 ring-secondary shadow-[0_0_10px_#C2A676]"></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Valorização</h3>
+                        <p class="text-gray-400">Consolidação da região como polo comercial e alta procura por espaços.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOCO DE BENEFÍCIOS -->
+    <section class="py-24 bg-primary border-y border-accent/10">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Estruturado para Grandes Negócios</h2>
+                <p class="text-textMuted max-w-2xl mx-auto">Um projeto pensado meticulosamente para atender às exigências do mercado corporativo moderno.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-secondary p-8 rounded-sm border border-accent/10 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="text-accent mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="map-pin" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Localização Estratégica</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Conexão fácil com as principais vias e polos industriais, facilitando a logística e visibilidade.</p>
+                </div>
+
+                <div class="bg-secondary p-8 rounded-sm border border-accent/10 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="text-accent mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="trending-up" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Potencial de Valorização</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Inserido num vetor de crescimento da cidade, com projeções sólidas de aumento de valorização por m².</p>
+                </div>
+
+                <div class="bg-secondary p-8 rounded-sm border border-accent/10 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="text-accent mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="building-2" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Perfil Corporativo</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Lotes formatados para receber sedes de empresas, clínicas, armazéns modernos e centros de negócios.</p>
+                </div>
+
+                <div class="bg-secondary p-8 rounded-sm border border-accent/10 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="text-accent mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="shield" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Projeto Planeado</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Urbanismo inteligente que valoriza a circulação, segurança e estética do seu futuro empreendimento.</p>
+                </div>
+
+                <div class="bg-secondary p-8 rounded-sm border border-accent/10 hover:border-accent/50 transition-all duration-300 group">
+                    <div class="text-accent mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="lock" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Exclusividade</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Oferta limitada de áreas comerciais com este nível de infraestrutura na região de Betim.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GATILHO DE CURIOSIDADE -->
+    <section class="py-20 bg-gradient-to-b from-secondary to-primary">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-6">
+                Por que motivo alguns investidores estão a analisar este projeto <span class="text-accent italic">antes do lançamento completo?</span>
+            </h2>
+            <p class="text-xl text-gray-400 mb-10">
+                Existem detalhes sobre o potencial comercial desta área que são partilhados apenas com quem demonstra real interesse estratégico.
+            </p>
+            <div class="inline-block bg-secondary p-8 border border-accent/20 rounded-lg text-left shadow-2xl">
+                <p class="text-white font-semibold mb-6 flex items-center gap-2">
+                    <i data-lucide="lock" class="text-accent w-5 h-5"></i> O material restrito contém:
+                </p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center gap-3 text-gray-300">
+                        <div class="w-1.5 h-1.5 rounded-full bg-accent"></div> Masterplan com zonas de maior valorização
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-300">
+                        <div class="w-1.5 h-1.5 rounded-full bg-accent"></div> Estudo de viabilidade de negócios
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-300">
+                        <div class="w-1.5 h-1.5 rounded-full bg-accent"></div> Condições de aquisição early-bird
+                    </li>
+                </ul>
+                <button onclick="openForm()" class="w-full bg-accent text-secondary hover:bg-accentHover font-bold py-4 rounded-sm transition-all duration-300">
+                    Solicitar Material Completo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-12 border-t border-accent/20 mt-10">
+        <div class="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-gray-500">
+            <div class="flex items-center gap-4">
+                <img src="https://github.com/lucasfpereira2-wq/bom-negocio/raw/main/logobomnegocios.png" onerror="this.src='image_bbc079.png'; this.onerror=null;" alt="Logo" class="h-10 opacity-50 grayscale" />
+            </div>
+            <div class="text-center md:text-right">
+                <p>BOM NEGÓCIO IMÓVEIS</p>
+                <p class="mt-1">Todos os direitos reservados © <span id="current-year"></span></p>
+                <div class="flex items-center justify-center md:justify-end gap-4 mt-4">
+                    <a href="#" class="hover:text-accent transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-accent transition-colors">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- STICKY CTA MOBILE -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-primary/95 backdrop-blur-md border-t border-accent/20 z-30">
+        <button onclick="openForm()" class="w-full bg-accent text-secondary font-bold py-3 rounded-sm shadow-lg flex justify-center items-center gap-2">
+            Receber Informações
+        </button>
+    </div>
+
+    <!-- WHATSAPP FLOAT BUTTON -->
+    <a href="#" class="fixed bottom-20 md:bottom-8 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform z-30">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+    </a>
+
+    <!-- MODAL / MULTISTEP FORM -->
+    <div id="leadModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-secondary/90 backdrop-blur-md cursor-pointer transition-opacity" onclick="closeFormBg()"></div>
+        
+        <!-- Modal Box -->
+        <div class="relative bg-primary border border-accent/30 rounded-xl w-full max-w-md shadow-2xl overflow-hidden z-10 flex flex-col">
+            
+            <!-- Header/Close -->
+            <div class="flex justify-between items-center p-6 pb-2">
+                <img src="https://github.com/lucasfpereira2-wq/bom-negocio/raw/main/logobomnegocios.png" onerror="this.src='image_bbc079.png'; this.onerror=null;" alt="Logo" class="h-8 object-contain" />
+                <button id="closeModalBtn" onclick="closeForm()" class="text-gray-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div id="progress-container" class="w-full bg-gray-800 h-1 mb-6">
+                <div id="progress-bar" class="bg-accent h-1 transition-all duration-500 ease-out" style="width: 20%;"></div>
+            </div>
+
+            <!-- Content Container -->
+            <div class="p-8 pt-2 relative overflow-hidden min-h-[300px]">
+                
+                <!-- STEP 1: NOME -->
+                <div id="step-1" class="form-step animate-fadeIn">
+                    <h3 class="text-2xl font-serif font-bold text-white mb-2">Para começarmos, qual o seu nome?</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Informações estritamente confidenciais.</p>
+                    <input type="text" id="input-nome" oninput="validateStep1()" onkeydown="handleEnter(event, 1)" class="w-full bg-transparent border-b-2 border-gray-600 focus:border-accent text-xl text-white py-3 outline-none transition-colors placeholder-gray-700" placeholder="Digite o seu nome completo">
+                    <button id="btn-step-1" onclick="nextStep()" disabled class="mt-8 bg-accent text-secondary font-bold py-3 px-8 rounded-sm w-full opacity-50 cursor-not-allowed hover:bg-accentHover transition-colors">
+                        Continuar
+                    </button>
+                </div>
+
+                <!-- STEP 2: WHATSAPP -->
+                <div id="step-2" class="form-step hidden-step">
+                    <h3 class="text-2xl font-serif font-bold text-white mb-2">Qual o seu melhor WhatsApp?</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Enviaremos o material exclusivo por lá.</p>
+                    <input type="tel" id="input-whatsapp" oninput="validateStep2()" onkeydown="handleEnter(event, 2)" class="w-full bg-transparent border-b-2 border-gray-600 focus:border-accent text-xl text-white py-3 outline-none transition-colors placeholder-gray-700" placeholder="(00) 00000-0000">
+                    <button id="btn-step-2" onclick="nextStep()" disabled class="mt-8 bg-accent text-secondary font-bold py-3 px-8 rounded-sm w-full opacity-50 cursor-not-allowed hover:bg-accentHover transition-colors">
+                        Continuar
+                    </button>
+                </div>
+
+                <!-- STEP 3: EMAIL -->
+                <div id="step-3" class="form-step hidden-step">
+                    <h3 class="text-2xl font-serif font-bold text-white mb-2">E o seu melhor e-mail?</h3>
+                    <p class="text-gray-400 mb-6 text-sm">Para envio de estudos e tabelas PDF.</p>
+                    <input type="email" id="input-email" oninput="validateStep3()" onkeydown="handleEnter(event, 3)" class="w-full bg-transparent border-b-2 border-gray-600 focus:border-accent text-xl text-white py-3 outline-none transition-colors placeholder-gray-700" placeholder="seu@email.com">
+                    <button id="btn-step-3" onclick="nextStep()" disabled class="mt-8 bg-accent text-secondary font-bold py-3 px-8 rounded-sm w-full opacity-50 cursor-not-allowed hover:bg-accentHover transition-colors">
+                        Continuar
+                    </button>
+                </div>
+
+                <!-- STEP 4: OBJETIVO -->
+                <div id="step-4" class="form-step hidden-step">
+                    <h3 class="text-2xl font-serif font-bold text-white mb-6">Qual o seu objetivo principal?</h3>
+                    <div class="space-y-3" id="objetivo-options">
+                        <button onclick="setObjetivo(this, 'Investimento em Lotes')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Investimento em Lotes</button>
+                        <button onclick="setObjetivo(this, 'Instalar a minha Empresa')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Instalar a minha Empresa</button>
+                        <button onclick="setObjetivo(this, 'Construção Futura')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Construção Futura</button>
+                        <button onclick="setObjetivo(this, 'Ainda a avaliar opções')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Ainda a avaliar opções</button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: INVESTIMENTO -->
+                <div id="step-5" class="form-step hidden-step">
+                    <h3 class="text-2xl font-serif font-bold text-white mb-6">Faixa de investimento estimada:</h3>
+                    <div class="space-y-3" id="investimento-options">
+                        <button onclick="setInvestimento(this, 'Até R$ 200 mil')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Até R$ 200 mil</button>
+                        <button onclick="setInvestimento(this, 'R$ 200 mil a R$ 500 mil')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">R$ 200 mil a R$ 500 mil</button>
+                        <button onclick="setInvestimento(this, 'R$ 500 mil a R$ 1 milhão')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">R$ 500 mil a R$ 1 milhão</button>
+                        <button onclick="setInvestimento(this, 'Acima de R$ 1 milhão')" class="w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all">Acima de R$ 1 milhão</button>
+                    </div>
+                </div>
+
+                <!-- STEP 6: SUCCESS -->
+                <div id="step-6" class="form-step hidden-step text-center py-8">
+                    <div class="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="check-circle" class="text-accent w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-3xl font-serif font-bold text-white mb-4">Acesso Libertado.</h3>
+                    <p class="text-gray-400 mb-8">
+                        Recebemos as suas informações. Um especialista em negócios corporativos entrará em contacto em breve para apresentar os detalhes do Betim Trade Center.
+                    </p>
+                    <a href="https://wa.me/5531986089802?text=Olá,%20registei-me%20na%20página%20do%20Betim%20Trade%20Center%20e%20gostaria%20de%20mais%20informações." target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold py-4 px-8 rounded-sm hover:bg-[#20b858] transition-colors w-full justify-center">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Falar Agora pelo WhatsApp
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Inicializar os ícones do Lucide
+        lucide.createIcons();
+
+        // Ano atual no Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Lógica do Header no Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 100) {
+                header.classList.remove('py-6', 'bg-transparent');
+                header.classList.add('py-3', 'shadow-2xl', 'backdrop-blur-md', 'bg-secondary/90');
+            } else {
+                header.classList.add('py-6', 'bg-transparent');
+                header.classList.remove('py-3', 'shadow-2xl', 'backdrop-blur-md', 'bg-secondary/90');
+            }
+        });
+
+        // Lógica do Formulário Modal
+        let currentStep = 1;
+        const totalSteps = 5;
+        const formData = {
+            nome: '',
+            whatsapp: '',
+            email: '',
+            objetivo: '',
+            investimento: ''
+        };
+
+        const modal = document.getElementById('leadModal');
+
+        function openForm() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                const inputNome = document.getElementById('input-nome');
+                if(inputNome && currentStep === 1) inputNome.focus();
+            }, 100);
+        }
+
+        function closeForm() {
+            modal.classList.add('hidden');
+        }
+
+        function closeFormBg() {
+            if (currentStep < 6) {
+                closeForm();
+            }
+        }
+
+        function updateView() {
+            // Esconder todos
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.classList.add('hidden-step');
+                el.classList.remove('animate-fadeIn');
+            });
+            
+            // Mostrar atual
+            const activeStep = document.getElementById(`step-${currentStep}`);
+            if (activeStep) {
+                activeStep.classList.remove('hidden-step');
+                // Forçar o reflow para reiniciar animação
+                void activeStep.offsetWidth; 
+                activeStep.classList.add('animate-fadeIn');
+            }
+
+            // Atualizar barra de progresso e botão de fechar
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            if (currentStep < 6) {
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+                progressContainer.style.display = 'block';
+                closeBtn.style.display = 'block';
+            } else {
+                progressContainer.style.display = 'none';
+                closeBtn.style.display = 'none'; // Esconder o botão de fechar no final
+            }
+
+            // Auto-focus para os campos de texto
+            if(currentStep === 1) document.getElementById('input-nome').focus();
+            if(currentStep === 2) document.getElementById('input-whatsapp').focus();
+            if(currentStep === 3) document.getElementById('input-email').focus();
+        }
+
+        function nextStep() {
+            if (currentStep < 6) {
+                currentStep++;
+                updateView();
+            }
+        }
+
+        // Validações
+        function enableBtn(stepId) {
+            const btn = document.getElementById(`btn-step-${stepId}`);
+            btn.removeAttribute('disabled');
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function disableBtn(stepId) {
+            const btn = document.getElementById(`btn-step-${stepId}`);
+            btn.setAttribute('disabled', 'true');
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        function validateStep1() {
+            const val = document.getElementById('input-nome').value;
+            formData.nome = val;
+            if (val.trim().length > 2) enableBtn(1); else disableBtn(1);
+        }
+
+        function validateStep2() {
+            const val = document.getElementById('input-whatsapp').value;
+            formData.whatsapp = val;
+            if (val.trim().length >= 10) enableBtn(2); else disableBtn(2);
+        }
+
+        function validateStep3() {
+            const val = document.getElementById('input-email').value;
+            formData.email = val;
+            if (val.includes('@') && val.includes('.')) enableBtn(3); else disableBtn(3);
+        }
+
+        function handleEnter(e, stepId) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const btn = document.getElementById(`btn-step-${stepId}`);
+                if (!btn.hasAttribute('disabled')) {
+                    nextStep();
+                }
+            }
+        }
+
+        // Lógica de Seleção de Botões (Objetivo e Investimento)
+        function setObjetivo(btnElement, valor) {
+            formData.objetivo = valor;
+            
+            // Remover estilos ativos dos outros
+            const container = document.getElementById('objetivo-options');
+            container.querySelectorAll('button').forEach(btn => {
+                btn.className = 'w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all';
+            });
+            
+            // Adicionar estilo ativo ao clicado
+            btnElement.className = 'w-full text-left p-4 rounded border border-accent bg-accent/10 text-accent transition-all';
+            
+            // Avançar rápido
+            setTimeout(nextStep, 300);
+        }
+
+        function setInvestimento(btnElement, valor) {
+            formData.investimento = valor;
+            
+            const container = document.getElementById('investimento-options');
+            container.querySelectorAll('button').forEach(btn => {
+                btn.className = 'w-full text-left p-4 rounded border border-gray-700 text-gray-300 hover:border-gray-500 transition-all';
+            });
+            
+            btnElement.className = 'w-full text-left p-4 rounded border border-accent bg-accent/10 text-accent transition-all';
+            
+            // Enviar Lead
+            submitLead();
+        }
+
+        function submitLead() {
+            // Aqui entra o código para enviar os dados para o RD Station, CRM, etc.
+            console.log("Lead a ser enviado:", formData);
+            
+            // Ir para a tela de Sucesso
+            setTimeout(() => {
+                currentStep = 6;
+                updateView();
+            }, 400);
+        }
+    </script>
+</body>
+</html>
