@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Alphaville Betim 2 · Bom Negócio Imóveis</title>
+<meta name="description" content="Mapa interativo do Alphaville Betim 2 sobre imagem de satélite e relevo reais: escolha o lote, veja o sol ao longo do dia e simule sua casa.">
+<meta property="og:title" content="Alphaville Betim 2 · Mapa interativo dos lotes">
+<meta property="og:description" content="Escolha o lote, veja o sol ao longo do dia e simule sua casa. Bom Negócio Imóveis.">
+<meta property="og:image" content="logo.png">
+<meta name="theme-color" content="#0b1728">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css">
+<style>
+:root{
+  --navy:#0b1728; --deep:#060d18; --gold:#c2a676; --gold-2:#e2cc9f; --ink:#f1f4f8; --muted:#9eb0c5;
+  --line:rgba(226,204,159,.22); --glass:rgba(8,17,30,.72);
+  --f-display:"Marcellus",Georgia,serif; --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  --gl:max(16px,env(safe-area-inset-left,0px)); --gr:max(16px,env(safe-area-inset-right,0px));
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--deep);color:var(--ink);font:14px/1.45 var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+#map{position:fixed;inset:0}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+.glass{background:var(--glass);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+h1,h2{font-family:var(--f-display);font-weight:400;margin:0;letter-spacing:.01em}
+.num{font-variant-numeric:tabular-nums}
+
+/* barra superior */
+.top{position:fixed;top:calc(14px + var(--safe-t));left:var(--gl);right:var(--gr);display:flex;gap:10px;align-items:flex-start;pointer-events:none;z-index:5}
+.top > *{pointer-events:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:7px 16px 7px 7px}
+.brand img{width:42px;height:42px;border-radius:50%}
+.brand h1{font-size:19px;line-height:1.1}
+.tools{margin-left:auto;display:flex;gap:6px;padding:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.seg{display:flex;background:rgba(255,255,255,.05);border-radius:999px;padding:3px}
+.chip{background:transparent;border:0;color:var(--ink);border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip:hover{background:rgba(255,255,255,.07)}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--navy)}
+.search{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border-radius:999px;padding:0 4px 0 12px}
+.search input{width:92px;background:transparent;border:0;color:var(--ink);font:600 13px var(--f-body);text-transform:uppercase;padding:8px 0}
+.search input::placeholder{color:var(--muted);text-transform:none;font-weight:500}
+.search button{border:0;background:var(--gold);color:var(--navy);border-radius:999px;width:30px;height:30px;font-weight:700}
+
+/* legenda */
+.legend{position:fixed;left:var(--gl);top:calc(82px + var(--safe-t));padding:12px 14px;display:grid;gap:7px;z-index:4;font-size:12.5px;width:230px}
+.legend .row{display:flex;gap:9px;align-items:center}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.legend .n{margin-left:auto;color:var(--muted)}
+.legend p{margin:2px 0 0;font-size:11.5px;color:var(--muted);line-height:1.45}
+
+/* sol */
+.sun{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + var(--safe-b));width:min(720px,calc(100vw - 32px));padding:12px 18px 10px;z-index:5;display:grid;gap:4px}
+.sunrow{display:flex;align-items:center;gap:14px}
+.play{width:40px;height:40px;border-radius:50%;border:0;background:var(--gold);color:var(--navy);flex:none;display:grid;place-items:center}
+.clock{font-family:var(--f-display);font-size:28px;line-height:1;min-width:78px}
+.sunmeta{font-size:11.5px;color:var(--muted);line-height:1.5}
+.sunmeta b{color:var(--ink);font-weight:600}
+.seasons{margin-left:auto;display:flex}
+.seasons .chip{padding:6px 10px;font-size:12px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:24px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,#16243b,#e39a5c 17%,#f6e3b0 50%,#e39a5c 83%,#16243b)}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,#16243b,#e39a5c 17%,#f6e3b0 50%,#e39a5c 83%,#16243b)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff6dc;border:3px solid var(--gold);margin-top:-8px;box-shadow:0 0 18px rgba(255,214,140,.9)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff6dc;border:3px solid var(--gold);box-shadow:0 0 18px rgba(255,214,140,.9)}
+.dayrow{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-size:11.5px;color:var(--muted)}
+#day::-webkit-slider-runnable-track{background:rgba(226,204,159,.25)}
+#day::-moz-range-track{background:rgba(226,204,159,.25)}
+#day::-webkit-slider-thumb{width:12px;height:12px;margin-top:-4px;box-shadow:none;border-width:2px}
+
+/* ficha do lote */
+.lot{position:fixed;right:var(--gr);top:calc(82px + var(--safe-t));bottom:calc(150px + var(--safe-b));width:350px;overflow:auto;padding:20px;z-index:6;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin}
+.lot h2{font-size:34px;line-height:1}
+.x{position:absolute;right:12px;top:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:12px;overflow:hidden;flex:none}
+.stats div{background:rgba(11,23,40,.9);padding:10px;display:grid;gap:1px}
+.stats b{font-size:15px;font-weight:700}
+.stats span{font-size:10.5px;color:var(--muted)}
+.callout{display:flex;gap:12px;align-items:center;padding:11px 12px;border-radius:12px;background:rgba(194,166,118,.1);border:1px solid var(--line);flex:none}
+.callout p{margin:0;font-size:12px;color:var(--muted);line-height:1.45}
+.callout strong{display:block;color:var(--ink);font-size:13.5px}
+.models{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:none}
+.model{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--ink);border-radius:12px;padding:10px 11px;text-align:left;display:grid;gap:2px}
+.model b{font-size:12.5px}
+.model span{font-size:11px;color:var(--muted)}
+.model[aria-pressed="true"]{border-color:var(--gold);background:rgba(194,166,118,.18)}
+.facts{display:grid;grid-template-columns:1fr auto;gap:5px 12px;font-size:12px;color:var(--muted);flex:none}
+.facts b{color:var(--ink);font-weight:600;text-align:right}
+.row2{display:flex;gap:8px;flex:none}
+.btn{flex:1;border:1px solid var(--gold);background:transparent;color:var(--gold-2);border-radius:999px;padding:10px 12px;font-weight:700;font-size:12.5px;text-decoration:none;text-align:center}
+.btn.solid{background:var(--gold);color:var(--navy)}
+.btn.wa{background:#1fae55;border-color:#1fae55;color:#fff}
+.chart{flex:none}
+.chart text{font:10px var(--f-body);fill:var(--muted)}
+.note{font-size:10.5px;color:var(--muted);line-height:1.5;margin:0}
+
+.tip{position:fixed;pointer-events:none;z-index:8;padding:6px 10px;border-radius:9px;font-size:12px;background:rgba(6,13,24,.92);border:1px solid var(--line);white-space:nowrap;transform:translate(-50%,calc(-100% - 14px))}
+.qmark{font-family:var(--f-display);color:var(--navy);background:var(--gold-2);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:15px;box-shadow:0 0 0 3px rgba(11,23,40,.45),0 4px 14px rgba(0,0,0,.45);pointer-events:none}
+.toast{position:fixed;left:50%;top:calc(80px + var(--safe-t));transform:translateX(-50%);padding:9px 16px;border-radius:999px;font-size:13px;z-index:9}
+
+/* abertura */
+.intro{position:fixed;inset:0;z-index:20;display:grid;place-items:center;text-align:center;padding:24px;background:linear-gradient(180deg,rgba(6,13,24,.25),rgba(6,13,24,.7) 55%,rgba(6,13,24,.92));transition:opacity 1.4s ease,visibility 1.4s}
+.intro.out{opacity:0;visibility:hidden}
+.intro-in{display:grid;gap:18px;justify-items:center;max-width:680px;animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.intro img{width:96px;height:96px;border-radius:50%;box-shadow:0 0 0 1px var(--line),0 20px 60px rgba(0,0,0,.6)}
+.intro h2{font-size:clamp(40px,8vw,84px);line-height:1;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+.intro p{margin:0;color:#d5deea;font-size:16px;line-height:1.6;max-width:44ch}
+.facts-intro{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.facts-intro div{display:grid}
+.facts-intro b{font-family:var(--f-display);font-size:32px;color:var(--gold-2);font-weight:400}
+.facts-intro span{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#b8c5d6}
+.cta{border:0;background:linear-gradient(180deg,var(--gold-2),var(--gold));color:var(--navy);font-weight:700;font-size:15px;padding:16px 34px;border-radius:999px;box-shadow:0 12px 40px rgba(194,166,118,.4)}
+.cta[disabled]{opacity:.6;cursor:wait}
+
+.maplibregl-ctrl-attrib{background:rgba(6,13,24,.6)!important;color:#c9d3df}
+.maplibregl-ctrl-attrib a{color:#e2cc9f!important}
+.maplibregl-ctrl-bottom-right{bottom:calc(var(--safe-b))}
+body.intro-on .top,body.intro-on .sun,body.intro-on .legend,body.intro-on .maplibregl-ctrl-bottom-right{opacity:0;pointer-events:none}
+.top,.sun,.legend{transition:opacity .8s}
+@media (prefers-reduced-motion:reduce){.intro,.intro-in{transition:none;animation:none}}
+
+@media (max-width:780px){
+  .brand{padding:5px 12px 5px 5px}.brand img{width:34px;height:34px}.brand h1{font-size:15px}.brand .eyebrow{font-size:9px}
+  .top{flex-wrap:wrap}
+  .tools{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:none;border-radius:999px;padding:4px}
+  .tools::-webkit-scrollbar{display:none}
+  .tools .chip{padding:7px 11px;font-size:12px}
+  .search input{width:70px}
+  .legend{display:none}
+  .sun{padding:10px 12px 8px}
+  .sunrow{flex-wrap:wrap;gap:8px 12px}
+  .seasons{margin-left:auto}
+  .play{width:34px;height:34px}
+  .seasons .chip{padding:5px 8px;font-size:11px}
+  .sunmeta{display:none}
+  .clock{font-size:24px;min-width:66px}
+  .lot{left:var(--gl);right:var(--gr);width:auto;top:auto;bottom:calc(178px + var(--safe-b));max-height:38vh;padding:16px}
+  .lot h2{font-size:26px}
+  .toast{top:calc(130px + var(--safe-t))}
+}
+</style>
+</head>
+<body class="intro-on">
+<div id="map" role="application" aria-label="Mapa 3D do Alphaville Betim 2"></div>
+
+<div class="top">
+  <header class="brand glass"><img src="logo.png" alt="Bom Negócio Imóveis"><div><div class="eyebrow">Bom Negócio Imóveis</div><h1>Alphaville Betim 2</h1></div></header>
+  <nav class="tools glass" aria-label="Visualização">
+    <div class="seg"><button class="chip" data-mode="sol" aria-pressed="true">Sol na frente</button><button class="chip" data-mode="size" aria-pressed="false">Tamanho</button></div>
+    <button class="chip" id="hood" aria-pressed="false">Condomínio construído</button>
+    <button class="chip" id="overview">Visão geral</button>
+    <form class="search" id="search"><label for="q" class="sr" hidden>Lote</label><input id="q" placeholder="Lote: M-12" autocomplete="off"><button aria-label="Buscar lote">→</button></form>
+  </nav>
+</div>
+
+<div class="legend glass" id="legend"></div>
+<aside class="lot glass" id="lot" hidden aria-live="polite"></aside>
+
+<section class="sun glass" aria-label="Simulação do sol">
+  <div class="sunrow">
+    <button class="play" id="play" aria-label="Animar o dia"><svg width="14" height="14" viewBox="0 0 14 14"><path id="playicon" d="M3 1.5v11l9-5.5z" fill="currentColor"/></svg></button>
+    <div class="clock num" id="clock">09:30</div>
+    <div class="sunmeta" id="sunmeta"></div>
+    <div class="seasons seg" id="seasons">
+      <button class="chip" data-doy="355">Verão</button><button class="chip" data-doy="79">Outono</button><button class="chip" data-doy="172">Inverno</button><button class="chip" data-doy="265">Primavera</button>
+    </div>
+  </div>
+  <input type="range" id="time" min="300" max="1230" step="1" value="570" aria-label="Hora do dia">
+  <div class="dayrow"><span>Data</span><input type="range" id="day" min="1" max="365" value="172" aria-label="Dia do ano"><span id="daylabel" class="num" style="color:var(--ink);min-width:48px;text-align:right">21 jun</span></div>
+</section>
+
+<div class="tip" id="tip" hidden></div>
+<div class="toast glass" id="toast" hidden></div>
+
+<div class="intro" id="intro">
+  <div class="intro-in">
+    <img src="logo.png" alt="">
+    <div class="eyebrow">Betim · Minas Gerais</div>
+    <h2>Alphaville Betim 2</h2>
+    <p>Veja o terreno real em 3D. Escolha seu lote, acompanhe o sol ao longo do dia e simule a sua casa.</p>
+    <div class="facts-intro"><div><b id="f-n">410</b><span>lotes</span></div><div><b id="f-ha">62,6 ha</b><span>de área</span></div><div><b id="f-alt">840–925 m</b><span>de altitude</span></div></div>
+    <button class="cta" id="enter" disabled>Carregando mapa…</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js"></script>
+<script>
+(async()=>{
+const WHATS='5531986089802';
+const D=await (await fetch('data.json')).json();
+const G=D.geo, LAT=-19.9065, LON=-44.1925, TZ=-3, rad=Math.PI/180;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobile=()=>innerWidth<=780;
+const fmt=n=>Math.round(n).toLocaleString('pt-BR'), fmt1=n=>n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const lots=D.lots.features, byId={};lots.forEach(f=>byId[f.properties.id]=f);
+const S=D.stats;
+document.getElementById('f-n').textContent=S.n;
+document.getElementById('f-ha').textContent=fmt1(S.gleba/1e4)+' ha';
+const alts=lots.map(f=>f.properties.ef);document.getElementById('f-alt').textContent=Math.floor(Math.min(...alts)/5)*5+'–'+Math.ceil(Math.max(...alts)/5)*5+' m';
+
+/* ---------------- sol ---------------- */
+function sunPos(doy,min){const ms=Date.UTC(2026,0,1)+(doy-1)*864e5+(min-TZ*60)*6e4,d=ms/864e5-10957.5;
+  const g=(357.529+.98560028*d)*rad,q=280.459+.98564736*d,L=(q+1.915*Math.sin(g)+.02*Math.sin(2*g))*rad,e=(23.439-3.6e-7*d)*rad;
+  const ra=Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L)),dec=Math.asin(Math.sin(e)*Math.sin(L));
+  const H=((18.697374558+24.06570982441908*d)%24*15+LON)*rad-ra,la=LAT*rad;
+  const alt=Math.asin(Math.sin(la)*Math.sin(dec)+Math.cos(la)*Math.cos(dec)*Math.cos(H));
+  const az=Math.atan2(-Math.cos(dec)*Math.sin(H),Math.sin(dec)*Math.cos(la)-Math.cos(dec)*Math.sin(la)*Math.cos(H));
+  return{alt:alt/rad,az:(az/rad+360)%360}}
+function sunTimes(doy){let r=null,s=null,p=sunPos(doy,240).alt;for(let m=242;m<=1260;m+=2){const a=sunPos(doy,m).alt;if(p<-.83&&a>=-.83)r=m;if(p>=-.83&&a<-.83)s=m;p=a}return{r,s}}
+const hhmm=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(Math.floor(m%60)).padStart(2,'0');
+const MON=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const doyLabel=d=>{const t=new Date(Date.UTC(2026,0,d));return t.getUTCDate()+' '+MON[t.getUTCMonth()]};
+const facadeHours=(az,doy)=>{let h=0;for(let m=300;m<=1230;m+=10){const s=sunPos(doy,m);if(s.alt>4&&Math.cos((s.az-az)*rad)>.17)h+=10}return h/60};
+const DIRS=['Norte','Nordeste','Leste','Sudeste','Sul','Sudoeste','Oeste','Noroeste'],dirName=a=>DIRS[Math.round(a/45)%8];
+const SOL=[{c:'#f0c95c',t:'Frente Norte',l:'Norte · sol o dia todo',d:'Sol durante o dia inteiro no inverno. É a orientação mais procurada em Minas.'},
+  {c:'#f7ead0',t:'Frente Leste',l:'Leste · sol da manhã',d:'Sol da manhã na fachada e tarde fresca dentro de casa.'},
+  {c:'#ee9a5b',t:'Frente Oeste',l:'Oeste · sol da tarde',d:'Sol da tarde na fachada. O quintal recebe o sol da manhã.'},
+  {c:'#8fb2dc',t:'Frente Sul',l:'Sul · quintal ensolarado',d:'Pouco sol direto na frente. O sol fica no quintal, ótimo para piscina.'}];
+const SIZE=[{c:'#e9f0dc',l:'até 400 m²'},{c:'#bfe0a0',l:'400 a 500 m²'},{c:'#84c46c',l:'500 a 700 m²'},{c:'#3f9a4a',l:'700 m² ou mais'}];
+lots.forEach(f=>{const p=f.properties;p.sk=p.a<400?0:p.a<500?1:p.a<700?2:3});
+
+/* ---------------- geometria local ---------------- */
+const toLL=(x,y)=>[G.lon0+x/G.kx,G.lat0-y/G.ky];
+const P=(p,u,v)=>[p.o[0]+p.u[0]*u+p.v[0]*v,p.o[1]+p.u[1]*u+p.v[1]*v];
+const rect=(p,u0,u1,v0,v1)=>[P(p,u0,v0),P(p,u1,v0),P(p,u1,v1),P(p,u0,v1)];
+function hull(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);
+  const lo=[],up=[];for(const p of pts){while(lo.length>1&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}
+  for(const p of pts.slice().reverse()){while(up.length>1&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}return lo.slice(0,-1).concat(up.slice(0,-1))}
+const feat=(pts,props)=>({type:'Feature',properties:props,geometry:{type:'Polygon',coordinates:[[...pts,pts[0]].map(q=>toLL(q[0],q[1]))]}});
+const C={plaster:'#f2eee6',plaster2:'#e6e0d4',stone:'#a69c8f',wood:'#9a6a45',glass:'#2a3a4c',glow:'#ffcf7d',slab:'#faf8f3',roof:'#b25c3d',roof2:'#9c4e33',water:'#37c2df',deck:'#b08359',dark:'#30353c'};
+const MODELS=[{id:'terrea',n:'Térrea contemporânea',d:'1 pavimento · laje plana',pav:1},{id:'sobrado',n:'Sobrado moderno',d:'2 pavimentos · balanço',pav:2},
+  {id:'classica',n:'Térrea com telhado',d:'telhado cerâmico · varanda',pav:1},{id:'none',n:'Só o terreno',d:'ver o lote vazio',pav:0}];
+// partes: [u0,u1,v0,v1,base,topo,cor,sombra?]
+function houseParts(p,model){
+  const[u0,u1,v0,v1]=p.b,bw=u1-u0,bd=v1-v0,W=Math.max(5,Math.min(bw,15)),Dd=Math.max(6,Math.min(bd,model==='sobrado'?13:16)),cu=(u0+u1)/2,f=v0;
+  const L=cu-W/2,R=cu+W/2,parts=[];let area=0,ocup=0;
+  const add=(a,b,c,d,z0,z1,col,sh=true)=>parts.push([a,b,c,d,z0,z1,col,sh]);
+  if(model==='terrea'){
+    add(L+W*.38,R,f,f+Dd,0,3.4,C.plaster);add(L,L+W*.38,f+Dd*.3,f+Dd,0,3.4,C.wood);
+    add(L-.6,R+.6,f-.6,f+Dd+.6,3.4,3.75,C.slab);
+    add(L+W*.45,R-W*.08,f-.08,f,.4,2.9,'GLASS',false);add(L+.1,L+W*.36,f+Dd*.3-.08,f+Dd*.3,0,2.6,C.dark,false);
+    area=W*.62*Dd+W*.38*Dd*.7;ocup=(W+1.2)*(Dd+1.2);
+  }else if(model==='sobrado'){
+    add(L+W*.05,R-W*.05,f+1.4,f+Dd+1.4,0,3.1,C.stone);
+    add(L,R,f,f+Dd*.85,3.1,6.3,C.plaster);add(L-.3,R+.3,f-.3,f+Dd*.85+.3,6.3,6.6,C.slab);
+    add(L+W*.15,R-W*.1,f-.08,f,3.6,5.8,'GLASS',false);add(L+W*.2,R-W*.15,f+1.32,f+1.4,.3,2.8,'GLASS',false);
+    add(L,L+W*.22,f-.25,f,3.1,6.3,C.wood,false);
+    area=W*.9*Dd+W*Dd*.85;ocup=W*.9*Dd;
+  }else if(model==='classica'){
+    add(L,R,f+1.8,f+Dd+1.8,0,3.1,C.plaster2);add(L+W*.1,R-W*.1,f,f+1.8,0,.25,C.deck,false);
+    add(L+W*.15,L+W*.4,f+1.72,f+1.8,.4,2.5,'GLASS',false);add(R-W*.4,R-W*.15,f+1.72,f+1.8,.4,2.5,'GLASS',false);
+    for(let i=0;i<5;i++){const k=i*.95;add(L-.8+k,R+.8-k,f-.6+k*Math.min(1,Dd/W),f+Dd+2.6-k*Math.min(1,Dd/W),3.1+i*.55,3.65+i*.55,i%2?C.roof2:C.roof,i<2)}
+    area=W*Dd+W*.8*1.8;ocup=W*Dd;
+  }
+  let pool=false;
+  if(model!=='none'){const back=f+Dd+(model==='classica'?1.8:model==='sobrado'?1.4:0)+1,room=p.D-back-1.5;
+    if(room>4.2){const pd=Math.min(room-1.6,4.2),pw=Math.min(bw-1,9);add(cu-pw/2-1,cu+pw/2+1,back,back+pd+1.6,0,.12,C.deck,false);add(cu-pw/2,cu+pw/2,back+.8,back+.8+pd,.12,.16,C.water,false);pool=true}}
+  return{parts,area,ocup,pool};
+}
+function partsToFeatures(p,parts,glow){return parts.map(q=>feat(rect(p,q[0],q[1],q[2],q[3]),{b:q[4],h:q[5],c:q[6]==='GLASS'?(glow?C.glow:C.glass):q[6]}))}
+function shadowFeatures(p,parts,sun){if(sun.alt<2)return[];const t=1/Math.tan(Math.max(sun.alt,4)*rad),dx=-Math.sin(sun.az*rad)*t,dy=Math.cos(sun.az*rad)*t,out=[];
+  for(const q of parts){if(!q[7])continue;const r=rect(p,q[0],q[1],q[2],q[3]);const pts=[...r.map(a=>[a[0]+dx*q[4],a[1]+dy*q[4]]),...r.map(a=>[a[0]+dx*q[5],a[1]+dy*q[5]])];if(q[4]===0)pts.push(...r);out.push(feat(hull(pts),{}))}return out}
+function hoodParts(p,i){const[u0,u1,v0]=p.b,W=Math.max(5,Math.min(u1-u0,14)),Dd=Math.max(6,Math.min(p.b[3]-v0,15)),cu=(u0+u1)/2,two=(i*7)%3===0,h=two?6.2:3.3;
+  const wall=['#eee9df','#e2dbcd','#d8d2c7','#f4f0e9','#cfc6b6'][i%5],k=(i*5)%3,parts=[[cu-W/2,cu+W/2,v0,v0+Dd,0,h,wall,true]];
+  if(k===0){for(let j=0;j<4;j++){const s=j*1.1;parts.push([cu-W/2-.6+s,cu+W/2+.6-s,v0-.6+s,v0+Dd+.6-s,h+j*.5,h+.5+j*.5,j%2?C.roof2:C.roof,j<1])}}
+  else parts.push([cu-W/2-.4,cu+W/2+.4,v0-.4,v0+Dd+.4,h,h+.35,k===1?'#5a5f66':C.slab,false]);return parts}
+
+/* ---------------- mapa ---------------- */
+const CENTER=[-44.1918,-19.9066];
+const map=new maplibregl.Map({container:'map',center:[-44.165,-19.94],zoom:12.2,pitch:0,bearing:0,maxPitch:80,hash:false,antialias:true,
+  attributionControl:{compact:true},
+  style:{version:8,
+    sources:{
+      sat:{type:'raster',tiles:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],tileSize:256,maxzoom:19,attribution:'Imagem © Esri, Maxar, Earthstar Geographics'},
+      dem:{type:'raster-dem',tiles:['https://tiles.mapterhorn.com/{z}/{x}/{y}.webp'],tileSize:512,maxzoom:12,encoding:'terrarium',attribution:'Relevo © <a href="https://mapterhorn.com/attribution">Mapterhorn</a>'},
+      demh:{type:'raster-dem',tiles:['https://tiles.mapterhorn.com/{z}/{x}/{y}.webp'],tileSize:512,maxzoom:12,encoding:'terrarium'}},
+    layers:[{id:'sat',type:'raster',source:'sat',paint:{'raster-fade-duration':250,'raster-contrast':.08,'raster-saturation':.05}},
+      {id:'hill',type:'hillshade',source:'demh',paint:{'hillshade-exaggeration':.4,'hillshade-shadow-color':'#081222','hillshade-highlight-color':'#fff1cf','hillshade-accent-color':'#081222','hillshade-illumination-anchor':'map'}}],
+    sky:{'sky-color':'#6fa6dc','horizon-color':'#dbe7f3','fog-color':'#e3ebf3','sky-horizon-blend':.6,'horizon-fog-blend':.7,'fog-ground-blend':.35,'atmosphere-blend':.8}}});
+map.addControl(new maplibregl.NavigationControl({visualizePitch:true,showZoom:!mobile()}),'bottom-right');
+
+const empty={type:'FeatureCollection',features:[]};
+const lotOp=v=>['case',['boolean',['feature-state','sel'],false],.12,['boolean',['feature-state','hover'],false],Math.min(.92,v+.25),v];
+const fc=a=>({type:'FeatureCollection',features:a});
+map.on('load',()=>{
+  map.setTerrain({source:'dem',exaggeration:1.35});
+  map.addSource('roads',{type:'geojson',data:D.roads});
+  map.addSource('lots',{type:'geojson',data:D.lots});
+  map.addSource('perim',{type:'geojson',data:D.perim});
+  ['shadow','house','hood','hoodshadow'].forEach(s=>map.addSource(s,{type:'geojson',data:empty}));
+  map.addLayer({id:'roads',type:'fill',source:'roads',paint:{'fill-color':'#d8cfbd','fill-opacity':['interpolate',['linear'],['zoom'],13,.8,18,.88]}});
+  map.addLayer({id:'roads-edge',type:'line',source:'roads',paint:{'line-color':'#fbf6ea','line-width':['interpolate',['linear'],['zoom'],14,.3,19,2],'line-opacity':.8}});
+  map.addLayer({id:'lots',type:'fill',source:'lots',paint:{'fill-color':colorExpr('sol'),
+    'fill-opacity':['interpolate',['linear'],['zoom'],13,lotOp(.75),16,lotOp(.6),18,lotOp(.4),20,lotOp(.25)]}});
+  map.addLayer({id:'hoodshadow',type:'fill',source:'hoodshadow',paint:{'fill-color':'#0a1424','fill-opacity':.35}});
+  map.addLayer({id:'shadow',type:'fill',source:'shadow',paint:{'fill-color':'#0a1424','fill-opacity':.42}});
+  map.addLayer({id:'lots-line',type:'line',source:'lots',paint:{'line-color':'#ffffff','line-opacity':['interpolate',['linear'],['zoom'],13,.35,17,.85],'line-width':['interpolate',['linear'],['zoom'],13,.3,17,.9,20,2]}});
+  map.addLayer({id:'perim',type:'line',source:'perim',paint:{'line-color':'#e2cc9f','line-width':['interpolate',['linear'],['zoom'],12,1.5,17,3],'line-dasharray':[3,2]}});
+  map.addLayer({id:'sel',type:'line',source:'lots',filter:['==',['get','id'],''],paint:{'line-color':'#ffd98a','line-width':['interpolate',['linear'],['zoom'],14,2,19,4.5],'line-blur':.5}});
+  map.addLayer({id:'hood',type:'fill-extrusion',source:'hood',paint:{'fill-extrusion-color':['get','c'],'fill-extrusion-height':['get','h'],'fill-extrusion-base':['get','b'],'fill-extrusion-opacity':1,'fill-extrusion-vertical-gradient':true}});
+  map.addLayer({id:'house',type:'fill-extrusion',source:'house',paint:{'fill-extrusion-color':['get','c'],'fill-extrusion-height':['get','h'],'fill-extrusion-base':['get','b'],'fill-extrusion-opacity':1,'fill-extrusion-vertical-gradient':true}});
+  D.quadras.forEach(q=>{const el=document.createElement('div');el.className='qmark';el.textContent=q.q;q.m=new maplibregl.Marker({element:el}).setLngLat(q.ll).addTo(map)});
+  paintLegend();updateSun();map.fire('zoom');
+  const btn=document.getElementById('enter');btn.disabled=false;btn.textContent='Explorar o terreno';
+  const fromHash=decodeURIComponent(location.hash.slice(1)).match(/^lote-([A-Za-z]-\d{1,2})$/);
+  if(fromHash)btn.dataset.lot=fromHash[1].toUpperCase();
+});
+map.on('zoom',()=>{const z=map.getZoom();D.quadras.forEach(q=>q.m&&(q.m.getElement().style.display=z>13.6&&z<17.6?'':'none'))});
+
+function colorExpr(mode){const L=mode==='sol'?SOL:SIZE,k=mode==='sol'?'k':'sk';
+  return k==='k'?['match',['get','k'],0,L[0].c,1,L[1].c,2,L[2].c,L[3].c]:['step',['get','a'],L[0].c,400,L[1].c,500,L[2].c,700,L[3].c]}
+let mode='sol';
+function paintLegend(){const L=mode==='sol'?SOL:SIZE,cnt=[0,0,0,0];lots.forEach(f=>cnt[mode==='sol'?f.properties.k:f.properties.sk]++);
+  document.getElementById('legend').innerHTML=`<div class="eyebrow">${mode==='sol'?'Para onde a frente aponta':'Área do lote'}</div>`+L.map((x,i)=>`<div class="row"><span class="sw" style="background:${x.c}"></span>${x.l}<span class="n num">${cnt[i]}</span></div>`).join('')
+  +(mode==='sol'?'<p>Em Minas o sol passa pelo norte. Frente norte recebe sol o ano todo.</p>':'')}
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));map.setPaintProperty('lots','fill-color',colorExpr(mode));paintLegend()});
+
+/* ---------------- sol na cena ---------------- */
+let doy=172,minutes=570,playing=false,curSun=sunPos(doy,minutes);
+const mix=(a,b,t)=>{const A=a.match(/\w\w/g).map(h=>parseInt(h,16)),B=b.match(/\w\w/g).map(h=>parseInt(h,16));return'#'+A.map((x,i)=>Math.round(x+(B[i]-x)*t).toString(16).padStart(2,'0')).join('')};
+const sstep=(x,a,b)=>{const t=Math.min(1,Math.max(0,(x-a)/(b-a)));return t*t*(3-2*t)};
+function updateSun(){
+  const s=curSun=sunPos(doy,minutes);
+  const day=sstep(s.alt,-4,10),gold=1-sstep(s.alt,2,24),night=1-sstep(s.alt,-8,1);
+  if(map.loaded()||map.isStyleLoaded()){
+    map.setPaintProperty('sat','raster-brightness-max',.22+.78*day);
+    map.setPaintProperty('sat','raster-saturation',-.45*night+.08*gold*day);
+    map.setPaintProperty('sat','raster-hue-rotate',-6*gold*day);
+    map.setPaintProperty('hill','hillshade-illumination-direction',Math.round(s.az));
+    map.setPaintProperty('hill','hillshade-exaggeration',.25+.45*gold*day);
+    map.setPaintProperty('hill','hillshade-highlight-color',mix('fff1cf','ffc27a',gold));
+    map.setLight({anchor:'map',position:[1.5,s.az,Math.min(88,90-Math.max(s.alt,6))],color:mix(mix('ffffff','ffc58f',gold*day),'7f95c8',night),intensity:.25+.35*day});
+    map.setSky({'sky-color':mix(mix('6fa6dc','e98d5c',gold*day),'040a15',night),'horizon-color':mix(mix('dbe7f3','ffd2a1',gold*day),'13213a',night),
+      'fog-color':mix(mix('e3ebf3','f3c79e',gold*day),'0b1526',night),'sky-horizon-blend':.6,'horizon-fog-blend':.7,'fog-ground-blend':.35,'atmosphere-blend':.8*day+.1});
+    map.setPaintProperty('shadow','fill-opacity',.45*sstep(s.alt,2,12));map.setPaintProperty('hoodshadow','fill-opacity',.38*sstep(s.alt,2,12));
+    renderHouse();renderHood();
+  }
+  document.getElementById('clock').textContent=hhmm(minutes);
+  const t=sunTimes(doy);
+  document.getElementById('sunmeta').innerHTML=`Nascer <b>${t.r?hhmm(t.r):'—'}</b> · Pôr <b>${t.s?hhmm(t.s):'—'}</b><br>Sol a <b>${Math.max(0,Math.round(s.alt))}°</b>, vindo do <b>${dirName(s.az)}</b>`;
+  document.getElementById('daylabel').textContent=doyLabel(doy);
+  document.querySelectorAll('#seasons .chip').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.doy===doy)));
+  timeEl.value=minutes;dayEl.value=doy;
+  if(sel)renderSolar();
+}
+const timeEl=document.getElementById('time'),dayEl=document.getElementById('day');
+timeEl.oninput=()=>{minutes=+timeEl.value;updateSun()};dayEl.oninput=()=>{doy=+dayEl.value;updateSun()};
+document.querySelectorAll('#seasons .chip').forEach(b=>b.onclick=()=>{doy=+b.dataset.doy;updateSun()});
+const playBtn=document.getElementById('play'),playIcon=document.getElementById('playicon');
+function setPlay(v){playing=v;playIcon.setAttribute('d',v?'M3 1.5h3v11H3zM8 1.5h3v11H8z':'M3 1.5v11l9-5.5z');playBtn.setAttribute('aria-label',v?'Pausar':'Animar o dia')}
+playBtn.onclick=()=>{if(!playing&&minutes>=1225)minutes=330;setPlay(!playing)};
+let last=0;function tick(t){if(playing){const dt=Math.min(.1,(t-last)/1000);minutes=Math.min(1230,minutes+dt*50);if(minutes>=1230)setPlay(false);updateSun()}last=t;requestAnimationFrame(tick)}requestAnimationFrame(tick);
+
+/* ---------------- casa e condomínio ---------------- */
+let sel=null,model='terrea',houseInfo=null,hoodOn=false;
+function renderHouse(){const src=map.getSource('house');if(!src)return;
+  if(!sel){src.setData(empty);map.getSource('shadow').setData(empty);return}
+  const p=byId[sel].properties,h=houseParts(p,model);houseInfo=h;const night=curSun.alt<-1;
+  src.setData(fc(partsToFeatures(p,h.parts,night)));map.getSource('shadow').setData(fc(shadowFeatures(p,h.parts,curSun)))}
+function renderHood(){const src=map.getSource('hood');if(!src)return;
+  if(!hoodOn){src.setData(empty);map.getSource('hoodshadow').setData(empty);return}
+  const fs=[],sh=[];lots.forEach((f,i)=>{if(f.properties.id===sel)return;const pr=hoodParts(f.properties,i);fs.push(...partsToFeatures(f.properties,pr,false));sh.push(...shadowFeatures(f.properties,pr,curSun))});
+  src.setData(fc(fs));map.getSource('hoodshadow').setData(fc(sh))}
+const hoodBtn=document.getElementById('hood');
+hoodBtn.onclick=()=>{hoodOn=!hoodOn;hoodBtn.setAttribute('aria-pressed',String(hoodOn));renderHood();if(hoodOn&&!sel&&map.getZoom()<16.2)map.easeTo({zoom:16.6,pitch:65,duration:1800})};
+
+/* ---------------- câmera ---------------- */
+const panelPad=()=>mobile()?{top:120,bottom:Math.round(innerHeight*.38)+190,left:0,right:0}:{top:80,bottom:150,left:0,right:380};
+function lotCenter(p){const[u0,u1]=p.b;return toLL(...P(p,(u0+u1)/2,p.D/2))}
+const viewBearing=p=>Math.atan2(p.v[0],-p.v[1])/rad;
+let fixToken=0;
+function focus(target,opts){const tok=++fixToken,pad=panelPad();
+  map.flyTo({center:target,padding:pad,duration:reduce?0:opts.duration,essential:true,zoom:opts.zoom,pitch:opts.pitch,bearing:opts.bearing});
+  map.once('moveend',()=>{if(tok!==fixToken)return;const pt=map.project(target),cx=pad.left+(innerWidth-pad.left-pad.right)/2,cy=pad.top+(innerHeight-pad.top-pad.bottom)/2;
+    const dx=pt.x-cx,dy=pt.y-cy;if(Math.hypot(dx,dy)>12)map.panBy([dx,dy],{duration:reduce?0:700})})}
+function aerial(p){focus(lotCenter(p),{zoom:mobile()?18.4:19.15,pitch:62,bearing:viewBearing(p)+28,duration:2600})}
+function street(p){const[u0,u1]=p.b;focus(toLL(...P(p,(u0+u1)/2,6)),{zoom:19.6,pitch:76,bearing:viewBearing(p)+12,duration:2400})}
+const OVER=()=>({center:[-44.1922,-19.9072],zoom:mobile()?14.6:15.45,pitch:58,bearing:-22,padding:{top:0,bottom:0,left:0,right:0}});
+document.getElementById('overview').onclick=()=>{map.flyTo({...OVER(),duration:reduce?0:2400})};
+
+/* ---------------- seleção / ficha ---------------- */
+const panel=document.getElementById('lot');
+function select(id,fly=true){const f=byId[id];if(!f)return false;
+  if(sel)map.setFeatureState({source:'lots',id:byId[sel].id},{sel:false});
+  sel=id;map.setFeatureState({source:'lots',id:f.id},{sel:true});map.setFilter('sel',['==',['get','id'],id]);
+  renderHouse();renderHood();renderPanel();if(fly)aerial(f.properties);
+  history.replaceState(null,'','#lote-'+id);return true}
+function closeLot(){if(sel)map.setFeatureState({source:'lots',id:byId[sel].id},{sel:false});sel=null;map.setFilter('sel',['==',['get','id'],'']);panel.hidden=true;renderHouse();renderHood();history.replaceState(null,'',location.pathname)}
+function slopeText(p){const d=p.eb-p.ef,a=Math.abs(d);if(a<1.5)return['Plano','praticamente plano'];return[(d>0?'Aclive':'Declive')+' '+fmt(a)+' m',d>0?`sobe cerca de ${fmt(a)} m da rua até o fundo`:`desce cerca de ${fmt(a)} m da rua até o fundo`]}
+function renderPanel(){const f=byId[sel],p=f.properties,m=MODELS.find(x=>x.id===model),h=houseInfo,s=SOL[p.k],sl=slopeText(p);
+  const msg=`Olá! Tenho interesse no lote ${p.id} (Quadra ${p.q}) do Alphaville Betim 2, ${fmt(p.a)} m². Vi no mapa interativo.`;
+  panel.hidden=false;
+  panel.innerHTML=`<button class="x" id="x" aria-label="Fechar">✕</button>
+  <div><div class="eyebrow">Quadra ${p.q} · Lote ${p.id.split('-')[1]}</div><h2>${fmt(p.a)} m²</h2></div>
+  <div class="stats"><div><b class="num">${fmt1(Math.min(p.W,40))} m</b><span>frente</span></div><div><b class="num">${fmt1(p.D)} m</b><span>profundidade</span></div><div><b>${dirName(p.az)}</b><span>frente para</span></div></div>
+  <div class="callout"><svg width="44" height="44" viewBox="-22 -22 44 44" aria-hidden="true"><circle r="20" fill="none" stroke="rgba(226,204,159,.4)"/><text y="-12" text-anchor="middle" font-size="8" fill="#e2cc9f" font-family="Manrope" font-weight="700">N</text><g transform="rotate(${p.az})"><path d="M0 -17 L6 -5 L-6 -5Z" fill="${s.c}"/><rect x="-7" y="-5" width="14" height="14" rx="2" fill="none" stroke="#f1f4f8" stroke-width="1.5"/></g></svg>
+    <p><strong>${s.t}</strong>${s.d}</p></div>
+  <div class="facts"><span>Altitude aproximada</span><b class="num">${fmt(p.ef)} m</b><span>Terreno</span><b>${sl[0]}</b></div>
+  <div class="eyebrow">Simular uma casa</div>
+  <div class="models">${MODELS.map(x=>`<button class="model" data-m="${x.id}" aria-pressed="${x.id===model}"><b>${x.n}</b><span>${x.d}</span></button>`).join('')}</div>
+  ${m.pav?`<div class="facts"><span>Área construída</span><b class="num">≈ ${fmt(h.area)} m²</b><span>Ocupação do terreno</span><b class="num">${fmt(Math.min(99,h.ocup/p.a*100))}%</b><span>Piscina no quintal</span><b>${h.pool?'cabe':'não cabe'}</b></div>`:''}
+  <div class="row2"><button class="btn solid" id="vstreet">Ver da rua</button><button class="btn" id="vair">Vista aérea</button></div>
+  <div><div class="eyebrow" style="margin-bottom:6px">Sol direto · <span id="solday"></span></div><div class="facts" id="solnow"></div></div>
+  <svg class="chart" id="chart" viewBox="0 0 300 118" width="100%" role="img" aria-label="Horas de sol na frente e nos fundos ao longo do ano"></svg>
+  <div class="row2"><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}">Tenho interesse</a><button class="btn" id="share">Copiar link</button></div>
+  <p class="note">Simulação ilustrativa. Lotes reconstruídos do projeto urbanístico; numeração de referência, não oficial. Altitude e desnível estimados por modelo de relevo (~30 m de resolução): ${sl[1]}. Recuos usados: frente 5 m, laterais 1,5 m, fundos 3 m. Confirme no regulamento.</p>`;
+  panel.querySelector('#x').onclick=closeLot;
+  panel.querySelectorAll('.model').forEach(b=>b.onclick=()=>{model=b.dataset.m;renderHouse();renderPanel()});
+  panel.querySelector('#vstreet').onclick=()=>street(p);panel.querySelector('#vair').onclick=()=>aerial(p);
+  panel.querySelector('#share').onclick=async()=>{const url=location.origin+location.pathname+'#lote-'+p.id;try{await navigator.clipboard.writeText(url);toast('Link do lote copiado')}catch(e){toast(url)}};
+  renderSolar()}
+function renderSolar(){const p=byId[sel].properties,el=document.getElementById('solnow');if(!el)return;
+  document.getElementById('solday').textContent=doyLabel(doy);
+  el.innerHTML=`<span>Fachada da frente</span><b class="num">${fmt1(facadeHours(p.az,doy))} h</b><span>Fundos e quintal</span><b class="num">${fmt1(facadeHours((p.az+180)%360,doy))} h</b>`;
+  const rows=MON.map((m,i)=>{const dd=Math.round(i*30.42+21);return{m,dd,f:facadeHours(p.az,dd),b:facadeHours((p.az+180)%360,dd)}});
+  const x0=22,w=274,h=82,y0=94,mx=12,bw=w/12,c=SOL[p.k].c;let s='';
+  for(const t of[0,6,12]){const y=y0-t/mx*h;s+=`<line x1="${x0}" x2="${x0+w}" y1="${y}" y2="${y}" stroke="rgba(158,176,197,.18)"/><text x="${x0-5}" y="${y+3}" text-anchor="end">${t}h</text>`}
+  rows.forEach((r,i)=>{const x=x0+i*bw,cur=Math.abs(r.dd-doy)<16;
+    s+=`<rect x="${x+2}" y="${y0-r.f/mx*h}" width="${bw/2-2}" height="${r.f/mx*h}" rx="1.5" fill="${c}" opacity="${cur?1:.7}"><title>${r.m}: frente ${fmt1(r.f)} h</title></rect><rect x="${x+bw/2}" y="${y0-r.b/mx*h}" width="${bw/2-2}" height="${r.b/mx*h}" rx="1.5" fill="#8fb2dc" opacity="${cur?1:.55}"><title>${r.m}: fundos ${fmt1(r.b)} h</title></rect><text x="${x+bw/2}" y="${y0+13}" text-anchor="middle"${cur?' style="fill:#e2cc9f"':''}>${r.m[0].toUpperCase()}</text>`});
+  s+=`<rect x="${x0}" y="0" width="9" height="9" rx="2" fill="${c}"/><text x="${x0+13}" y="8">frente</text><rect x="${x0+58}" y="0" width="9" height="9" rx="2" fill="#8fb2dc"/><text x="${x0+71}" y="8">fundos</text>`;
+  document.getElementById('chart').innerHTML=s}
+const toastEl=document.getElementById('toast');let tt;function toast(m){toastEl.textContent=m;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toastEl.hidden=true,2600)}
+
+/* ---------------- interação ---------------- */
+const tip=document.getElementById('tip');let hov=null;
+map.on('mousemove','lots',e=>{const f=e.features[0];if(hov!==null&&hov!==f.id)map.setFeatureState({source:'lots',id:hov},{hover:false});hov=f.id;map.setFeatureState({source:'lots',id:hov},{hover:true});
+  map.getCanvas().style.cursor='pointer';const p=f.properties;tip.hidden=false;tip.style.left=e.originalEvent.clientX+'px';tip.style.top=e.originalEvent.clientY+'px';
+  tip.innerHTML=`<b>${p.id}</b> · ${fmt(p.a)} m² · frente ${dirName(p.az)}`});
+map.on('mouseleave','lots',()=>{if(hov!==null)map.setFeatureState({source:'lots',id:hov},{hover:false});hov=null;tip.hidden=true;map.getCanvas().style.cursor=''});
+map.on('click','lots',e=>{stopOrbit();select(e.features[0].properties.id)});
+document.getElementById('search').onsubmit=e=>{e.preventDefault();let v=document.getElementById('q').value.trim().toUpperCase().replace(/\s+/g,'');const m=v.match(/^([A-Z])-?(\d{1,2})$/);if(m)v=m[1]+'-'+m[2].padStart(2,'0');
+  stopOrbit();if(!select(v))toast('Lote não encontrado. Use quadra e número, por exemplo M-12.')};
+
+/* ---------------- abertura cinematográfica ---------------- */
+let orbiting=false;
+function orbit(){if(!orbiting)return;map.easeTo({bearing:map.getBearing()+12,duration:9000,easing:t=>t});}
+map.on('moveend',()=>{if(orbiting)orbit()});
+function stopOrbit(){orbiting=false}
+['mousedown','touchstart','wheel'].forEach(ev=>map.getCanvasContainer().addEventListener(ev,stopOrbit,{passive:true}));
+document.getElementById('enter').onclick=e=>{const lot=e.currentTarget.dataset.lot;document.getElementById('intro').classList.add('out');document.body.classList.remove('intro-on');
+  if(lot&&byId[lot]){select(lot);return}
+  if(reduce){map.jumpTo(OVER());return}
+  minutes=360;updateSun();
+  map.flyTo({...OVER(),duration:7500,curve:1.3,essential:true});
+  const st=performance.now();(function rise(n){const t=Math.min(1,(n-st)/7500);minutes=360+(570-360)*(1-Math.pow(1-t,3));updateSun();if(t<1)requestAnimationFrame(rise);else{orbiting=true;setTimeout(()=>{if(orbiting)orbit()},400)}})(st)};
+window.__app={lotCenter:id=>lotCenter(byId[id].properties),select,setTime:(m,d)=>{minutes=m;if(d)doy=d;updateSun()},map,hood:()=>hoodBtn.click(),street:()=>street(byId[sel].properties),enter:()=>document.getElementById('enter').click()};
+})();
+</script>
+</body>
+</html>
