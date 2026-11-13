@@ -1,6 +1,6 @@
 # Carrossel 05 · Residencial ou condomínio fechado: qual a diferença?
 
-Formato: 8 slides, 1080 × 1350 px. Identidade Bom Negócio (azul e dourado). Postar na ordem `slide-1.png` → `slide-8.png`.
+Formato: 8 slides, 1080 × 1350 px. Identidade Bom Negócio: fundo azul-noite alternado com fundo champanhe (tom areia tirado do dourado), títulos em Cormorant Garamond sem itálico, textos em Montserrat. Código-fonte em `fonte/` (abrir `slides.html`; exportar com `node fonte/exportar.js`). Postar na ordem `slide-1.png` → `slide-8.png`.
 
 Complementa o carrossel 02 (as 5 perguntas para escolher): este explica o que é cada modelo e o que muda.
 
