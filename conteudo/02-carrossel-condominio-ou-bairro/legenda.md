@@ -1,6 +1,6 @@
 # Carrossel 02 · Condomínio fechado ou bairro aberto?
 
-Formato: 8 slides, 1080 × 1350 px. Identidade Bom Negócio (azul e dourado).
+Formato: 8 slides, 1080 × 1350 px. Identidade Bom Negócio: fundo azul-noite e champanhe, títulos em Cormorant Garamond sem itálico. Código-fonte em `fonte/slides.html` (exportar com `node conteudo/_modelo/exportar.js conteudo/02-carrossel-condominio-ou-bairro`).
 
 ## Legenda
 
@@ -13,7 +13,9 @@ Antes de escolher o seu lote, responda com calma estas 5 perguntas:
 4. O que você teria de lazer sem sair de casa?
 5. Se um dia precisar vender, quem compraria de você?
 
-Salve este post para consultar quando for visitar um lote. E se quiser conversar sobre o seu caso, fale com o Paulo pelo link na bio.
+Salve este post para consultar quando for visitar um lote.
+
+Siga a @bomnegocioimoveisbh para receber, toda semana, um conteúdo que ajuda você a comprar o seu lote com mais segurança.
 
 Bom Negócio Imóveis · CRECI MGJ-4806
 
@@ -21,4 +23,4 @@ Bom Negócio Imóveis · CRECI MGJ-4806
 
 ## Antes de postar
 
-- [ ] Paulo aprova a frase atribuída a ele no slide 7.
+- [x] Slide 7 é um ditado popular, sem atribuição a ninguém.

@@ -1,107 +1,14 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,400;1,500&display=swap">
-<style>
-:root{--azul:#062045;--noite:#041530;--dourado:#AE9677;--luz:#C2A676;--nevoa:#EEF1F5;--grafite:#3A4256;}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#888}
-.s{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:Montserrat,sans-serif;display:flex;flex-direction:column;padding:0 90px}
-.dark{background:radial-gradient(90% 60% at 60% 22%,#0B2A57 0%,#062045 45%,#041530 100%);color:#fff}
-.light{background:var(--nevoa);color:var(--azul)}
-.eyebrow{position:absolute;top:92px;left:90px;font-size:21px;font-weight:600;letter-spacing:.32em;text-transform:uppercase}
-.dark .eyebrow{color:var(--luz)} .light .eyebrow{color:#8A7458}
-.body{flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:150px;padding-bottom:40px}
-.foot{height:90px;border-top:1px solid;display:flex;align-items:center;justify-content:space-between;margin-bottom:33px}
-.dark .foot{border-color:rgba(255,255,255,.18)} .light .foot{border-color:#AEB4BF}
-.brand{display:flex;align-items:center;gap:16px;font-size:20px;letter-spacing:.22em;text-transform:uppercase}
-.brand svg{width:30px;height:36px}
-.dark .brand{color:var(--luz)} .light .brand{color:var(--azul)}
-.pg{font-size:20px;letter-spacing:.2em}
-.dark .pg{color:#AEB7C7} .light .pg{color:#5B6577}
-h1,h2{font-family:Cinzel,serif;font-weight:500;line-height:1.16}
-h1{font-size:94px;letter-spacing:.01em}
-h2{font-size:62px;letter-spacing:.01em}
-em{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;text-transform:none;color:var(--luz)}
-.light em{color:var(--dourado)}
-h1 em{display:block;font-size:104px;line-height:1.15}
-.num{font-family:'Playfair Display',serif;font-style:italic;font-size:118px;line-height:.9;margin-bottom:28px}
-.dark .num{color:var(--luz)} .light .num{color:var(--dourado)}
-.rule{width:140px;height:3px;background:var(--luz);margin:46px 0 44px}
-.light .rule{background:var(--dourado)}
-p,li{font-size:33px;line-height:1.62}
-.dark p,.dark li{color:#DCE2EC} .light p,.light li{color:var(--grafite)}
-p+p{margin-top:22px}
-.lead{font-size:38px;line-height:1.5}
-ul{list-style:none}
-li{position:relative;padding-left:44px;margin-bottom:14px;line-height:1.45}
-li::before{content:"";position:absolute;left:0;top:.72em;width:22px;height:2px;background:var(--luz)}
-.light li::before{background:var(--dourado)}
-b{font-weight:500}.dark b{color:#fff}.light b{color:var(--azul)}
-.swipe{font-size:24px;letter-spacing:.3em;color:var(--luz);margin-bottom:38px}
-/* tabela */
-table{width:100%;border-collapse:collapse;margin-top:6px}
-th{font-family:Cinzel,serif;font-weight:600;font-size:27px;letter-spacing:.04em;color:var(--azul);text-align:left;padding:0 0 16px;border-bottom:2px solid var(--dourado)}
-th:first-child{width:27%}
-td{font-size:27px;line-height:1.35;color:var(--grafite);padding:19px 18px 19px 0;border-bottom:1px solid #C9CFD9;vertical-align:top}
-td:first-child{font-size:17px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#8A7458;padding-top:24px}
-.note{font-size:21px;color:#5B6577;margin-top:26px;line-height:1.4}
-/* comparativo */
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.cols h3{font-family:Cinzel,serif;font-weight:600;font-size:30px;letter-spacing:.06em;color:var(--azul);padding-bottom:16px;border-bottom:2px solid var(--dourado);margin-bottom:24px}
-.cols li{font-size:28px}
-/* citação */
-.center{text-align:center;align-items:center}
-.q{font-family:'Playfair Display',serif;font-size:180px;line-height:.6;color:var(--luz);height:80px;margin-bottom:56px}
-.quote{font-family:'Playfair Display',serif;font-style:italic;font-size:64px;line-height:1.36;color:#fff}
-.quote em{display:inline;font-size:inherit}
-.sig{font-size:22px;letter-spacing:.24em;text-transform:uppercase;color:#AEB7C7;line-height:1.45}
-.center .rule{margin:52px auto 54px}
-/* final */
-.mono-big{width:124px;height:149px;margin:0 auto 52px}
-.final h2{font-size:56px;text-align:center}
-.final p{text-align:center;font-size:35px;margin-top:40px}
-.btn{display:inline-block;background:var(--azul);color:#fff;font-weight:600;font-size:28px;letter-spacing:.3em;padding:30px 60px 30px 72px;margin:58px auto 0}
-.creci{font-size:21px!important;letter-spacing:.06em;color:#5B6577!important;margin-top:40px!important}
-</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap">
-<style>
-/* v2: Cormorant sem itálico + fundo champanhe */
-:root{--areia:#E9E0D0;--areia-linha:#CDBFA6;--ouro-esc:#7A6448}
-.light{background:radial-gradient(90% 60% at 60% 22%,#F1EADF 0%,#E9E0D0 55%,#DFD3BF 100%)!important}
-h1,h2,th,.cols h3,.num,.quote,.q,em{font-family:'Cormorant Garamond',serif!important;font-style:normal!important;letter-spacing:0!important}
-h1,h2,th,.cols h3{font-weight:600!important}
-h1{font-size:104px!important;line-height:1.06!important}
-h1 em{display:block;font-size:1em!important;line-height:1.06!important}
-h2{font-size:72px!important;line-height:1.1!important}
-h2 em{font-size:1em}
-em{font-weight:600!important}
-th{font-size:34px!important} .cols h3{font-size:36px!important}
-.num{font-weight:500!important;font-size:130px!important;line-height:.85!important}
-.quote{font-weight:500!important;font-size:70px!important;line-height:1.25!important}
-.quote em{font-weight:500!important}
-.q{font-size:200px!important;font-weight:500}
-.light .eyebrow,.light td:first-child{color:var(--ouro-esc)!important}
-.light .foot{border-color:var(--areia-linha)!important}
-.light td{border-bottom-color:var(--areia-linha)!important}
-.light p,.light li,.light td{color:#2E3647!important}
-.light .note,.light .pg,.creci{color:#5E5646!important}
-.light .rule,.light li::before,.light th{border-color:var(--dourado)}
-.num{font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
-.light em,.light .num{color:#8A7458!important}
-.quote{text-wrap:balance;font-size:66px!important}
-h1,h2{text-wrap:balance}
-</style></head><body>
-<template id="mono"><svg viewBox="0 0 250 300"><g fill="none" stroke="currentColor" stroke-width="13" stroke-linejoin="miter" stroke-miterlimit="10"><path d="M48 18H158C204 18 232 48 232 90C232 112 220 128 196 136C226 148 238 176 238 206C238 248 206 280 160 280H48V172L16 140L48 108Z"/><path d="M58 98L120 36V204L196 128"/></g></svg></template>
-
-<section class="s dark" id="s1">
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Carrossel 05</title><link rel="stylesheet" href="../../_modelo/carrossel.css"></head><body>
+<section class="s dark">
   <div class="eyebrow">Educativo · Entenda a diferença</div>
   <div class="body">
-    <h1>Residencial ou condomínio fechado: <em>qual a diferença?</em></h1>
+    <h1>Residencial ou condomínio fechado: <span class="hl block">qual a diferença?</span></h1>
     <div class="rule"></div>
     <p class="lead">O que muda no dia a dia, nas contas e nas regras de cada um.</p>
   </div>
-  <div class="swipe">ARRASTE &nbsp;→</div>
+  <div class="swipe">Arraste &nbsp;→</div>
 </section>
-
-<section class="s light" id="s2">
+<section class="s light">
   <div class="eyebrow">O residencial</div>
   <div class="body">
     <div class="num">1</div>
@@ -115,8 +22,7 @@ h1,h2{text-wrap:balance}
     </ul>
   </div>
 </section>
-
-<section class="s dark" id="s3">
+<section class="s dark">
   <div class="eyebrow">O condomínio fechado</div>
   <div class="body">
     <div class="num">2</div>
@@ -130,11 +36,10 @@ h1,h2{text-wrap:balance}
     </ul>
   </div>
 </section>
-
-<section class="s light" id="s4">
+<section class="s light">
   <div class="eyebrow">Comparativo</div>
   <div class="body">
-    <h2>Lado a <em>lado</em></h2>
+    <h2>Lado a <span class="hl">lado</span></h2>
     <div class="rule" style="margin-bottom:34px"></div>
     <table>
       <tr><th></th><th>Residencial</th><th>Condomínio</th></tr>
@@ -148,58 +53,40 @@ h1,h2{text-wrap:balance}
     <p class="note">Os detalhes variam conforme o empreendimento e a cidade.</p>
   </div>
 </section>
-
-<section class="s dark" id="s5">
+<section class="s dark">
   <div class="eyebrow">Atenção</div>
   <div class="body">
-    <h2>E o loteamento de <em>acesso controlado?</em></h2>
+    <h2>E o loteamento de <span class="hl">acesso controlado?</span></h2>
     <div class="rule"></div>
     <p>Existe um meio-termo: o bairro tem portaria e controle de entrada, mas as ruas continuam <b>públicas</b> e quem cuida é uma <b>associação de moradores</b>.</p>
     <p>Pela lei, ele não é um condomínio. Por isso, antes de comprar, pergunte: <b>qual é o modelo deste empreendimento?</b></p>
   </div>
 </section>
-
-<section class="s light" id="s6">
+<section class="s light">
   <div class="eyebrow">Qual é melhor?</div>
   <div class="body">
-    <h2>Depende do <em>seu momento.</em></h2>
+    <h2>Depende do <span class="hl">seu momento.</span></h2>
     <div class="rule"></div>
     <div class="cols">
-      <div><h3>Residencial</h3><ul>
-        <li>Custo mensal menor</li><li>Menos regras internas</li><li>Rotina de bairro</li></ul></div>
-      <div><h3>Condomínio</h3><ul>
-        <li>Mais segurança e privacidade</li><li>Lazer perto de casa</li><li>Padrão de vizinhança preservado</li></ul></div>
+      <div><h3>Residencial</h3><ul><li>Custo mensal menor</li><li>Menos regras internas</li><li>Rotina de bairro</li></ul></div>
+      <div><h3>Condomínio</h3><ul><li>Mais segurança e privacidade</li><li>Lazer perto de casa</li><li>Padrão de vizinhança preservado</li></ul></div>
     </div>
   </div>
 </section>
-
-<section class="s dark" id="s7">
+<section class="s dark">
   <div class="body center">
     <div class="q">“</div>
-    <div class="quote">Antes de escolher o lote, entenda <em>onde ele está.</em> O endereço também vem com regras.</div>
-    <div class="rule"></div>
-    <div class="sig">Paulo Lamego · mais de 20 anos<br>no mercado imobiliário</div>
+    <div class="quote">Antes de escolher o lote, entenda <span class="hl">onde ele está.</span> O endereço também vem com regras.</div>
   </div>
 </section>
-
-<section class="s light final" id="s8">
+<section class="s light final">
   <div class="body center">
-    <div class="mono-big" style="color:var(--azul)"></div>
-    <h2>Quer entender qual modelo combina com a sua família?</h2>
-    <p>Fale com o Paulo pelo WhatsApp.</p>
-    <div class="btn">LINK NA BIO</div>
+    <div class="mono-big"></div>
+    <h2>Siga a Bom Negócio Imóveis</h2>
+    <p>Toda semana, um conteúdo para você comprar o seu lote com mais segurança.</p>
+    <div class="btn">SEGUIR O PERFIL</div>
+    <p class="handle">@bomnegocioimoveisbh</p>
     <p class="creci">Bom Negócio Imóveis · CRECI MGJ-4806</p>
   </div>
 </section>
-
-<script>
-const tpl=document.getElementById('mono').innerHTML;
-const all=[...document.querySelectorAll('.s')];
-all.forEach((s,i)=>{
-  const f=document.createElement('div');f.className='foot';
-  f.innerHTML=`<div class="brand">${tpl}<span>Bom Negócio Imóveis</span></div><div class="pg">${i+1} / ${all.length}</div>`;
-  s.appendChild(f);
-});
-document.querySelector('.mono-big').innerHTML=tpl.replace('stroke-width="13"','stroke-width="9"');
-</script>
-</body></html>
+<script src="../../_modelo/modelo.js"></script></body></html>

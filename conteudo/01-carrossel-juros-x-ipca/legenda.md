@@ -1,6 +1,6 @@
 # Carrossel 01 · Juros do banco ou IPCA?
 
-Formato: carrossel de 8 slides, 1080 × 1350 px (feed 4:5). Postar na ordem `slide-1.png` → `slide-8.png`.
+Formato: 8 slides, 1080 × 1350 px (feed 4:5). Identidade Bom Negócio: fundo azul-noite e champanhe, títulos em Cormorant Garamond sem itálico. Código-fonte em `fonte/slides.html` (exportar com `node conteudo/_modelo/exportar.js conteudo/01-carrossel-juros-x-ipca`). Postar na ordem `slide-1.png` → `slide-8.png`.
 
 ## Legenda
 
@@ -12,7 +12,7 @@ No financiamento direto do Terras Alpha Betim 2 não há juros: a parcela é cor
 
 Como diz o ditado, quem compra terra não erra. Mas acerta mais quem compra fazendo a conta certa.
 
-Quer a simulação com o lote que você gostou? Fale com o Paulo pelo link na bio.
+Quer a simulação com o lote que você gostou? Siga a @bomnegocioimoveisbh e chame no direct.
 
 Estimativa aproximada. Condições sujeitas à análise e às regras vigentes da incorporadora.
 

@@ -1,16 +1,17 @@
 <title>Bom Negócio Brand Book</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap">
 <style>
 /* Layout: livro em capítulos — capa azul de página inteira, capítulos alternando papel claro e faixas azuis, régua dourada fina como fio condutor */
 :root{
   /* cores fixas da marca (não mudam com o tema) */
-  --azul:#062045; --azul-noite:#041530; --dourado:#AE9677; --dourado-luz:#C2A676; --nevoa:#EEF1F5; --grafite:#1F2633; --branco:#FFFFFF;
+  --azul:#062045; --azul-noite:#041530; --dourado:#AE9677; --dourado-luz:#C2A676; --nevoa:#EEF1F5; --champanhe:#E9E0D0; --dourado-escuro:#7A6448; --grafite:#1F2633; --branco:#FFFFFF;
   /* tokens da página */
   --bg:#F7F8FA; --surface:#FFFFFF; --fg:#1F2633; --muted:#5B6577; --line:#D9DEE6; --accent:#8A7458; --band:#062045; --band-fg:#E9ECF2;
-  --f-display:"Cinzel","Trajan Pro",Georgia,serif;
-  --f-serif:"Playfair Display",Georgia,"Times New Roman",serif;
+  --f-display:"Cormorant Garamond",Georgia,serif;
+  --f-logo:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
   --f-body:"Montserrat","Helvetica Neue",Arial,sans-serif;
   --s1:.75rem; --s2:1rem; --s3:1.5rem; --s4:2.5rem; --s5:4rem; --s6:6rem;
 }
@@ -24,8 +25,8 @@ h1,h2,h3{text-wrap:balance;margin:0;font-weight:500}
 p{margin:0;max-width:65ch}
 .eyebrow{font-family:var(--f-body);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .band .eyebrow,.cover .eyebrow{color:var(--dourado-luz)}
-h2{font-family:var(--f-display);font-size:clamp(1.9rem,4.2vw,3rem);letter-spacing:.04em;line-height:1.15}
-h3{font-family:var(--f-display);font-size:1.15rem;letter-spacing:.08em}
+h2{font-family:var(--f-display);font-weight:600;font-size:clamp(2.1rem,4.6vw,3.3rem);letter-spacing:0;line-height:1.1;font-variant-numeric:lining-nums}
+h3{font-family:var(--f-display);font-weight:600;font-size:1.4rem;letter-spacing:.01em}
 .lead{font-size:1.06rem;color:var(--muted)}
 .band .lead{color:#B9C2D3}
 section{padding-block:var(--s6)}
@@ -48,7 +49,7 @@ section{padding-block:var(--s6)}
 /* capa */
 .cover{background:radial-gradient(120% 90% at 80% 10%,#0B2A57 0%,var(--azul) 45%,var(--azul-noite) 100%);color:#E9ECF2;position:relative;overflow:hidden}
 .cover .wrap{padding-block:var(--s6) var(--s5);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--s5);align-items:center}
-.cover h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.6rem,7vw,5.2rem);letter-spacing:.06em;line-height:1.02;color:#fff}
+.cover h1{font-family:var(--f-logo);font-weight:400;font-size:clamp(2.6rem,7vw,5.2rem);letter-spacing:.06em;line-height:1.02;color:#fff}
 .cover h1 span{display:block;font-size:.32em;letter-spacing:.9em;color:var(--dourado-luz);margin-top:1rem}
 .cover .intro{display:grid;gap:var(--s3)}
 .cover p{color:#B9C2D3}
@@ -65,8 +66,8 @@ section{padding-block:var(--s6)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 /* essência */
-.manifesto{font-family:var(--f-serif);font-style:italic;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.35;max-width:30ch;color:var(--fg)}
-.manifesto em{color:var(--accent);font-style:italic}
+.manifesto{font-family:var(--f-serif);font-weight:500;font-style:normal;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.35;max-width:30ch;color:var(--fg)}
+.manifesto em{color:var(--accent);font-style:normal}
 .values{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:0;border-top:1px solid var(--line)}
 .values div{padding:var(--s3) var(--s3) var(--s3) 0;border-bottom:1px solid var(--line);display:grid;gap:.4rem;min-width:0}
 .values h3{color:var(--accent)}
@@ -116,8 +117,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .type-row .meta{display:grid;gap:.4rem;align-content:start}
 .type-row .meta h3{color:var(--accent)}
 .specimen{min-width:0;overflow-wrap:anywhere}
-.sp-cinzel{font-family:var(--f-display);font-size:clamp(2.2rem,6vw,4rem);letter-spacing:.08em;line-height:1.1}
-.sp-play{font-family:var(--f-serif);font-size:clamp(2rem,5vw,3.4rem);line-height:1.1}
+.sp-cinzel{font-family:var(--f-logo);font-size:clamp(2.2rem,6vw,4rem);letter-spacing:.08em;line-height:1.1}
+.sp-play{font-family:var(--f-serif);font-weight:600;font-size:clamp(2.2rem,5.4vw,3.6rem);line-height:1.08}
 .sp-mont{font-family:var(--f-body);font-size:clamp(1.6rem,4vw,2.6rem);font-weight:300;line-height:1.15}
 .glyphs{margin-top:var(--s2);color:var(--muted);letter-spacing:.06em}
 .scale{display:grid;gap:var(--s2);margin-top:var(--s3)}
@@ -129,7 +130,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .lines{aspect-ratio:3/2;max-width:100%;background:var(--azul);display:grid;place-items:center;border:1px solid var(--azul)}
 .lines div{width:70%;display:grid;gap:14px;justify-items:center;text-align:center}
 .lines i{display:block;height:1px;width:100%;background:var(--dourado)}
-.lines p{font-family:var(--f-display);color:#fff;letter-spacing:.3em;font-size:.95rem}
+.lines p{font-family:var(--f-logo);color:#fff;letter-spacing:.3em;font-size:.95rem}
 
 /* aplicações */
 .mock{display:grid;place-items:center;padding:var(--s4) var(--s3);background:var(--surface);border:1px solid var(--line);gap:var(--s2)}
@@ -137,18 +138,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .bcard.front{background:var(--azul);display:grid;place-items:center}
 .bcard.front svg{width:30%}
 .bcard.back{background:#fff;color:#1F2633;padding:7% 8%;display:grid;grid-template-columns:1fr auto;align-items:end;gap:.5rem}
-.bcard.back .n{font-family:var(--f-display);font-size:1rem;letter-spacing:.06em;color:var(--azul)}
+.bcard.back .n{font-family:var(--f-logo);font-size:1rem;letter-spacing:.06em;color:var(--azul)}
 .bcard.back .r{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:#8A7458}
 .bcard.back .c{font-size:.64rem;line-height:1.6;color:#3A4354;margin-top:.6rem}
 .bcard.back svg{width:2.2rem}
 .bcard.back .top{grid-column:1/-1;align-self:start;height:1px;background:var(--dourado)}
 .post{width:min(100%,320px);aspect-ratio:4/5;max-width:100%;background:linear-gradient(180deg,rgba(4,21,48,.15),rgba(4,21,48,.92) 62%),linear-gradient(135deg,#7D8794,#3E4856 55%,#222A36);color:#fff;padding:1.4rem;display:grid;align-content:space-between;box-shadow:0 14px 30px -14px rgba(4,21,48,.55)}
 .post .k{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dourado-luz)}
-.post .h{font-family:var(--f-serif);font-size:1.65rem;line-height:1.1}
+.post .h{font-family:var(--f-serif);font-weight:600;font-size:1.8rem;line-height:1.08}
 .post .f{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(194,166,118,.5);padding-top:.7rem;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
 .post .f svg{width:1.4rem}
 .sign{width:min(100%,340px);aspect-ratio:3/2;max-width:100%;background:var(--azul);display:grid;grid-template-rows:auto 1fr auto;padding:1.2rem 1.4rem;color:#fff;box-shadow:0 14px 30px -14px rgba(4,21,48,.55);border:6px solid #fff;outline:1px solid var(--line)}
-.sign .v{font-family:var(--f-display);font-size:2.2rem;letter-spacing:.14em;color:var(--dourado-luz);align-self:center;text-align:center}
+.sign .v{font-family:var(--f-logo);font-size:2.2rem;letter-spacing:.14em;color:var(--dourado-luz);align-self:center;text-align:center}
 .sign .t{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase}
 .sign .t svg{width:1.6rem}
 .sign .tel{text-align:center;font-size:1.05rem;letter-spacing:.12em;font-weight:500}
@@ -159,7 +160,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
 .chat img{width:36px;height:36px}
 .sig{width:min(100%,380px);max-width:100%;background:#fff;color:#1F2633;padding:1rem 1.2rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;font-size:.72rem;line-height:1.55;border:1px solid #E2E6EC}
 .sig svg{width:2.6rem}
-.sig .n{font-family:var(--f-display);font-size:.95rem;color:var(--azul);letter-spacing:.05em}
+.sig .n{font-family:var(--f-logo);font-size:.95rem;color:var(--azul);letter-spacing:.05em}
 .sig .bar{border-left:1px solid var(--dourado);padding-left:1rem}
 
 /* voz */
@@ -214,7 +215,7 @@ footer svg{width:2rem}
   <svg class="ghost" viewBox="0 0 250 300" aria-hidden="true"><use href="#bn-mark" stroke="#C2A676"/></svg>
   <div class="wrap">
     <div class="intro">
-      <span class="eyebrow">Manual de identidade visual · v1.0</span>
+      <span class="eyebrow">Manual de identidade visual · v1.1</span>
       <h1>Bom Negócio<span>IMÓVEIS</span></h1>
       <p class="lead" style="color:#B9C2D3">Como a marca aparece em tudo que leva o nosso nome: da placa no lote ao story no Instagram. Use este guia antes de criar qualquer peça, e envie-o junto para gráficas, agências e parceiros.</p>
       <div class="cover-meta"><span><b>Edição</b> Novembro 2026</span><span><b>Capítulos</b> 8</span><span><b>Uso</b> Interno e fornecedores</span></div>
@@ -358,12 +359,16 @@ footer svg{width:2rem}
         <dl><dt>HEX</dt><dd><button class="copy" data-c="#EEF1F5">#EEF1F5</button></dd><dt>RGB</dt><dd>238 · 241 · 245</dd><dt>CMYK</dt><dd>3 · 2 · 0 · 4</dd><dt>Uso</dt><dd>Fundos claros, papelaria</dd></dl></div>
       <div class="sw" style="background:#0D1D38;border-color:rgba(194,166,118,.25)"><div class="chip" style="background:#1F2633;color:#EEF1F5">Grafite<small>Texto</small></div>
         <dl><dt>HEX</dt><dd><button class="copy" data-c="#1F2633">#1F2633</button></dd><dt>RGB</dt><dd>31 · 38 · 51</dd><dt>CMYK</dt><dd>39 · 25 · 0 · 80</dd><dt>Uso</dt><dd>Texto corrido sobre fundo claro</dd></dl></div>
+      <div class="sw" style="background:#0D1D38;border-color:rgba(194,166,118,.25)"><div class="chip" style="background:#E9E0D0;color:#062045">Champanhe<small>Apoio · novo</small></div>
+        <dl><dt>HEX</dt><dd><button class="copy" data-c="#E9E0D0">#E9E0D0</button></dd><dt>RGB</dt><dd>233 · 224 · 208</dd><dt>CMYK</dt><dd>0 · 4 · 11 · 9</dd><dt>Uso</dt><dd>Fundo claro dos posts e carrosséis (no lugar do branco)</dd></dl></div>
+      <div class="sw" style="background:#0D1D38;border-color:rgba(194,166,118,.25)"><div class="chip" style="background:#7A6448;color:#E9E0D0">Dourado Escuro<small>Apoio · novo</small></div>
+        <dl><dt>HEX</dt><dd><button class="copy" data-c="#7A6448">#7A6448</button></dd><dt>RGB</dt><dd>122 · 100 · 72</dd><dt>CMYK</dt><dd>0 · 18 · 41 · 52</dd><dt>Uso</dt><dd>Rótulos e destaques sobre o champanhe</dd></dl></div>
     </div>
 
     <h3 style="margin-top:var(--s5)">Proporção em uma peça</h3>
     <div class="ratio" style="border-color:rgba(194,166,118,.3)">
       <div style="flex:60;background:#062045;color:#9AA6BB">Azul 60%</div>
-      <div style="flex:25;background:#EEF1F5;color:#062045">Névoa 25%</div>
+      <div style="flex:25;background:#E9E0D0;color:#062045">Champanhe 25%</div>
       <div style="flex:10;background:#AE9677;color:#062045">Dourado 10%</div>
       <div style="flex:5;background:#1F2633;color:#EEF1F5" title="Grafite 5%">5%</div>
     </div>
@@ -373,7 +378,9 @@ footer svg{width:2rem}
       <div class="pair" style="background:#062045;color:#C2A676;border-color:rgba(194,166,118,.3)"><b>Aa Dourado / Azul</b><span class="caption">Contraste 6,9:1 · aprovado para qualquer texto</span></div>
       <div class="pair" style="background:#EEF1F5;color:#062045"><b>Aa Azul / Névoa</b><span class="caption" style="color:#3A4354">Contraste 14,3:1 · ideal para leitura longa</span></div>
       <div class="pair" style="background:#AE9677;color:#062045"><b>Aa Azul / Dourado</b><span class="caption" style="color:#1F2633">Contraste 5,7:1 · títulos e botões</span></div>
-      <div class="pair" style="background:#EEF1F5;color:#AE9677"><b>Aa Dourado / Névoa</b><span class="caption" style="color:#B4443A">Contraste 2,5:1 · não usar para texto</span></div>
+      <div class="pair" style="background:#E9E0D0;color:#062045"><b>Aa Azul / Champanhe</b><span class="caption" style="color:#3A4354">Contraste 12,3:1 · posts e carrosséis</span></div>
+      <div class="pair" style="background:#E9E0D0;color:#7A6448"><b>Aa Dourado Escuro / Champanhe</b><span class="caption" style="color:#3A4354">Contraste 4,3:1 · rótulos e títulos grandes</span></div>
+      <div class="pair" style="background:#EEF1F5;color:#AE9677"><b>Aa Dourado / Névoa ou Champanhe</b><span class="caption" style="color:#B4443A">Contraste 2,2 a 2,5:1 · não usar para texto</span></div>
     </div>
   </div>
 </section>
@@ -383,12 +390,12 @@ footer svg{width:2rem}
   <div class="wrap">
     <div class="chapter-head"><span class="num">VI</span><div><span class="eyebrow">Tipografia</span><h2>Três vozes, uma hierarquia</h2><p class="lead">Todas gratuitas no Google Fonts, então o site, o Canva e a gráfica usam exatamente as mesmas letras.</p></div></div>
     <div class="type-row">
-      <div class="meta"><h3>Cinzel</h3><span class="caption">Institucional · capitulares</span><p class="caption">A mais próxima das letras da logo. Para nomes de empreendimentos, títulos de capa e placas. Sempre em maiúsculas, com espaçamento aberto.</p></div>
-      <div class="specimen"><div class="sp-cinzel">BETIM TRADE CENTER</div><div class="glyphs" style="font-family:var(--f-display)">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 Á É Ó Ç</div></div>
+      <div class="meta"><h3>Cinzel</h3><span class="caption">Somente assinatura da logo e placas</span><p class="caption">A mais próxima das letras da logo. Usar apenas na assinatura "Bom Negócio Imóveis", em placas e cartões, sempre em maiúsculas. Não usar em títulos de posts: as letras pequenas em caixa alta parecem de tamanhos diferentes.</p></div>
+      <div class="specimen"><div class="sp-cinzel">BOM NEGÓCIO IMÓVEIS</div><div class="glyphs" style="font-family:var(--f-logo)">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 Á É Ó Ç</div></div>
     </div>
     <div class="type-row">
-      <div class="meta"><h3>Playfair Display</h3><span class="caption">Editorial · títulos de anúncio</span><p class="caption">Já usada no site. Traz emoção às chamadas. O itálico funciona para destacar uma palavra.</p></div>
-      <div class="specimen"><div class="sp-play">O lote certo no vetor de <i>valorização</i></div><div class="glyphs" style="font-family:var(--f-serif)">Aa Bb Cc Dd Ee Ff Gg 0123456789 · <i>Aa Bb Cc</i></div></div>
+      <div class="meta"><h3>Cormorant Garamond</h3><span class="caption">Títulos · posts, carrosséis e anúncios</span><p class="caption">Clássica e refinada: transmite exclusividade. Peso 600 nos títulos, 500 em frases e números. Escrever em letras normais (maiúscula só no início). <b>Nunca usar itálico</b>: para destacar uma palavra, use a cor dourada na mesma fonte.</p></div>
+      <div class="specimen"><div class="sp-play">O lote certo no vetor de <span style="color:var(--accent)">valorização</span></div><div class="glyphs" style="font-family:var(--f-serif);font-variant-numeric:lining-nums">Aa Bb Cc Dd Ee Ff Gg 0123456789 · Á É Ó Ç</div></div>
     </div>
     <div class="type-row">
       <div class="meta"><h3>Montserrat</h3><span class="caption">Texto · interface · dados</span><p class="caption">Para descrições, metragens, preços, botões e legendas. Pesos 300, 400, 500 e 600.</p></div>
@@ -404,9 +411,9 @@ footer svg{width:2rem}
     <div class="type-row">
       <div class="meta"><h3>Escala</h3><span class="caption">Proporção 1,333 (quarta)</span></div>
       <div class="specimen scale" style="margin-top:0">
-        <div><span>H1 · 48</span><span style="font-family:var(--f-display);font-size:2.4rem;letter-spacing:.06em;line-height:1.1">LOTES COMERCIAIS</span></div>
-        <div><span>H2 · 36</span><span style="font-family:var(--f-serif);font-size:1.9rem;line-height:1.2">Seu próximo investimento</span></div>
-        <div><span>H3 · 27</span><span style="font-family:var(--f-serif);font-size:1.45rem">Localização estratégica</span></div>
+        <div><span>H1 · 48</span><span style="font-family:var(--f-display);font-weight:600;font-size:2.6rem;line-height:1.1">Lotes comerciais</span></div>
+        <div><span>H2 · 36</span><span style="font-family:var(--f-serif);font-weight:600;font-size:2rem;line-height:1.2">Seu próximo investimento</span></div>
+        <div><span>H3 · 27</span><span style="font-family:var(--f-serif);font-weight:600;font-size:1.55rem">Localização estratégica</span></div>
         <div><span>Corpo · 16</span><span>Inserido num vetor de crescimento da cidade, com projeções sólidas de valorização por m².</span></div>
         <div><span>Legenda · 12</span><span style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)">Betim · Minas Gerais</span></div>
       </div>
@@ -472,7 +479,7 @@ footer svg{width:2rem}
 <footer>
   <div class="wrap">
     <div style="display:flex;gap:var(--s2);align-items:center"><svg viewBox="0 0 250 300" aria-hidden="true"><use href="#bn-mark" stroke="var(--accent)"/></svg><span class="eyebrow">Bom Negócio Imóveis</span></div>
-    <span class="caption">Manual de identidade visual · v1.0 · Novembro 2026. Arquivos vetoriais do monograma estão na pasta <span class="mono">/marca</span> do repositório.</span>
+    <span class="caption">Manual de identidade visual · v1.1 · Novembro 2026. Arquivos vetoriais do monograma estão na pasta <span class="mono">/marca</span> do repositório.</span>
   </div>
 </footer>
 

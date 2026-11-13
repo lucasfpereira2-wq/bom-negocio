@@ -1,0 +1,102 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Carrossel 01</title><link rel="stylesheet" href="../../_modelo/carrossel.css">
+<style>
+.box{border:2px dashed rgba(255,255,255,.35);display:flex;align-items:flex-end;justify-content:center;padding-bottom:28px;font-weight:600;font-size:26px;position:relative;overflow:hidden}
+.box span{position:relative;z-index:1;text-align:center;line-height:1.25}
+.lote{background:var(--dourado);color:var(--azul)}
+.juros{background:repeating-linear-gradient(-45deg,#6E6656 0 22px,#3E4A5E 22px 44px);color:#fff}
+.boxes{display:flex;gap:24px}.boxes .box{width:220px;height:170px}
+.vrow{display:grid;grid-template-columns:200px 300px 300px;gap:24px;align-items:center;margin-top:36px}
+.vrow h3{font-weight:600;font-size:48px;color:#fff;line-height:1}
+.vrow small{display:block;font-size:22px;color:#AEB7C7;margin-top:12px;line-height:1.35}
+.vrow .box{height:210px}
+.corr{background:transparent;color:#fff;padding-bottom:72px}
+.corr::before{content:"";position:absolute;left:0;right:0;bottom:0;height:23%;background:#585B60}
+.per{font-family:var(--sans);font-size:24px;letter-spacing:.3em;color:var(--ouro-esc);margin:18px 0 40px}
+.defs{border-left:3px solid var(--dourado);padding-left:32px;margin-top:44px;font-family:var(--serif);font-weight:500;font-size:42px;line-height:1.35;color:var(--azul)}
+.ta-logo{width:470px;margin:0 0 48px -14px}
+.green h2{color:#fff}
+.green .rule{background:#E2783A}
+.green li::before{background:#E2783A}
+</style></head><body>
+<section class="s dark">
+  <div class="eyebrow">Terras Alpha Betim 2 · Educativo</div>
+  <div class="body">
+    <h1>No banco, você pode pagar <span class="hl">quase 2 lotes</span> pelo preço de 1.</h1>
+    <div class="rule"></div>
+    <div class="boxes"><div class="box lote"><span>Lote</span></div><div class="box juros"><span>Juros</span></div></div>
+  </div>
+  <div class="swipe">Arraste para entender &nbsp;→</div>
+</section>
+<section class="s light">
+  <div class="eyebrow">O problema</div>
+  <div class="body">
+    <div class="big">16% a 18%</div>
+    <div class="per">AO ANO</div>
+    <p>É quanto um financiamento bancário de terreno pode cobrar de juros hoje.</p>
+    <p>Esses juros entram em <b>todas</b> as parcelas, do primeiro ao último mês. No fim, você paga o lote quase duas vezes.</p>
+  </div>
+</section>
+<section class="s dark">
+  <div class="eyebrow">A alternativa</div>
+  <div class="body">
+    <h2>Financiamento direto com a incorporadora</h2>
+    <div class="rule"></div>
+    <ul>
+      <li><b>Sem juros.</b> Você paga o valor do lote, dividido em parcelas.</li>
+      <li><b>Só correção pelo IPCA.</b> A parcela é atualizada pela inflação.</li>
+      <li><b>Sem banco no meio.</b> O contrato é com o próprio empreendimento.</li>
+    </ul>
+  </div>
+</section>
+<section class="s light">
+  <div class="eyebrow">Afinal, o que é IPCA?</div>
+  <div class="body">
+    <h2>É a inflação oficial do Brasil.</h2>
+    <div class="rule"></div>
+    <p>Medido pelo IBGE todo mês, o IPCA mostra quanto os preços subiram.</p>
+    <p>Corrigir a parcela pelo IPCA significa que ela <b>só acompanha a inflação</b>. Ninguém está lucrando com juros em cima do seu dinheiro.</p>
+    <div class="defs">Juros = custo do dinheiro emprestado.<br>IPCA = só a atualização do valor.</div>
+  </div>
+</section>
+<section class="s dark">
+  <div class="eyebrow">Na prática</div>
+  <div class="body">
+    <h2>O mesmo lote, pago em <span class="hl">10 anos</span></h2>
+    <div class="vrow"><div><h3>Banco</h3><small>juros de 16% ao ano</small></div><div class="box lote"><span>O lote</span></div><div class="box juros"><span>+93%<br>de juros</span></div></div>
+    <div class="vrow"><div><h3>Direto</h3><small>só correção pelo IPCA</small></div><div class="box lote"><span>O lote</span></div><div class="box corr"><span>+23%<br>de correção</span></div></div>
+    <p class="note" style="margin-top:44px">Estimativa aproximada: parcelas em 10 anos, juros bancários de 16% ao ano (tabela Price) e IPCA médio de 4,5% ao ano. As condições reais dependem da análise e das regras vigentes da incorporadora.</p>
+  </div>
+</section>
+<section class="s green">
+  <div class="eyebrow">Onde isso existe</div>
+  <div class="body">
+    <img class="ta-logo" src="../../../empreendimentos/terras-alpha-betim-2/logo-terras-alpha-betim2-negativo.png" alt="Terras Alpha Betim 2">
+    <h2>Lotes a partir de 360 m², com financiamento direto sem juros.</h2>
+    <div class="rule"></div>
+    <ul>
+      <li>Lotes altos, com vista</li>
+      <li>Lotes de frente para a lagoa</li>
+      <li>Lotes próximos à mata</li>
+      <li>Praças e lazer pensados para a convivência</li>
+    </ul>
+  </div>
+</section>
+<section class="s light">
+  <div class="body center">
+    <div class="q">“</div>
+    <div class="quote" style="font-size:96px">Quem compra terra <span class="hl">não erra.</span></div>
+    <div class="rule"></div>
+    <p class="lead">Mas acerta mais quem compra fazendo a conta certa.</p>
+  </div>
+</section>
+<section class="s dark final">
+  <div class="body center">
+    <div class="mono-big"></div>
+    <h2>Siga a Bom Negócio Imóveis</h2>
+    <p>Toda semana, um conteúdo para você comprar o seu lote com mais segurança.</p>
+    <div class="btn">SEGUIR O PERFIL</div>
+    <p class="handle">@bomnegocioimoveisbh</p>
+    <p class="creci">Bom Negócio Imóveis · CRECI MGJ-4806</p>
+  </div>
+</section>
+<script src="../../_modelo/modelo.js"></script></body></html>

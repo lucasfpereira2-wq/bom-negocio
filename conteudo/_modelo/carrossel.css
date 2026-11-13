@@ -1,0 +1,77 @@
+/* Modelo de carrossel Bom Negócio Imóveis · 1080 × 1350 px
+   Títulos: Cormorant Garamond (sem itálico) · Texto: Montserrat
+   Fundos: azul-noite (.dark) alternado com champanhe (.light) */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@300;400;500;600&display=swap");
+:root{--azul:#062045;--noite:#041530;--dourado:#AE9677;--luz:#C2A676;--ouro-esc:#7A6448;--ouro-txt:#8A7458;
+  --champanhe:#E9E0D0;--champ-linha:#CDBFA6;--grafite:#2E3647;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:Montserrat,"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:var(--sans);display:flex;flex-direction:column;padding:0 90px}
+.dark{background:radial-gradient(90% 60% at 60% 22%,#0B2A57 0%,#062045 45%,#041530 100%);color:#fff}
+.light{background:radial-gradient(90% 60% at 60% 22%,#F1EADF 0%,#E9E0D0 55%,#DFD3BF 100%);color:var(--azul)}
+.green{background:radial-gradient(90% 60% at 60% 22%,#1C4A3D 0%,#163B31 50%,#0F2A23 100%);color:#fff}
+.eyebrow{position:absolute;top:92px;left:90px;font-size:21px;font-weight:600;letter-spacing:.32em;text-transform:uppercase}
+.dark .eyebrow{color:var(--luz)} .light .eyebrow{color:var(--ouro-esc)} .green .eyebrow{color:#E9E4D8}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:150px;padding-bottom:40px}
+.foot{height:90px;border-top:1px solid;display:flex;align-items:center;justify-content:space-between;margin-bottom:33px}
+.dark .foot,.green .foot{border-color:rgba(255,255,255,.18)} .light .foot{border-color:var(--champ-linha)}
+.brand{display:flex;align-items:center;gap:16px;font-size:20px;letter-spacing:.22em;text-transform:uppercase}
+.brand svg{width:30px;height:36px}
+.dark .brand,.green .brand{color:var(--luz)} .light .brand{color:var(--azul)}
+.pg{font-size:20px;letter-spacing:.2em}
+.dark .pg,.green .pg{color:#AEB7C7} .light .pg{color:#5E5646}
+/* títulos: uma família só, sem itálico; destaque = cor */
+h1,h2,h3,.num,.big,.quote,.q,th{font-family:var(--serif);font-style:normal;letter-spacing:0;text-wrap:balance;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}
+.defs{font-variant-numeric:lining-nums}
+h1,h2{font-weight:600;line-height:1.08}
+h1{font-size:104px}
+h2{font-size:72px;line-height:1.1}
+.hl{color:var(--luz)} .light .hl{color:var(--ouro-txt)}
+h1 .hl.block{display:block}
+.num{font-weight:500;font-size:130px;line-height:.85;margin-bottom:28px;font-variant-numeric:lining-nums}
+.dark .num,.green .num{color:var(--luz)} .light .num{color:var(--ouro-txt)}
+.big{font-weight:500;font-size:190px;line-height:.95;font-variant-numeric:lining-nums}
+.rule{width:140px;height:3px;background:var(--luz);margin:46px 0 44px}
+.light .rule{background:var(--dourado)}
+p,li{font-size:33px;line-height:1.62}
+.dark p,.dark li,.green p,.green li{color:#DCE2EC} .light p,.light li{color:var(--grafite)}
+p+p{margin-top:22px}
+.lead{font-size:38px;line-height:1.5}
+ul{list-style:none}
+li{position:relative;padding-left:44px;margin-bottom:14px;line-height:1.45}
+li::before{content:"";position:absolute;left:0;top:.72em;width:22px;height:2px;background:var(--luz)}
+.light li::before{background:var(--dourado)}
+b{font-weight:500}.dark b,.green b{color:#fff}.light b{color:var(--azul)}
+.swipe{font-size:24px;letter-spacing:.3em;color:var(--luz);margin-bottom:38px;text-transform:uppercase}
+.note{font-size:21px;line-height:1.45;margin-top:26px}
+.dark .note{color:#9FAABD} .light .note{color:#5E5646}
+/* tabela */
+table{width:100%;border-collapse:collapse;margin-top:6px}
+th{font-weight:600;font-size:34px;color:var(--azul);text-align:left;padding:0 0 16px;border-bottom:2px solid var(--dourado)}
+th:first-child{width:27%}
+td{font-size:27px;line-height:1.35;color:var(--grafite);padding:19px 18px 19px 0;border-bottom:1px solid var(--champ-linha);vertical-align:top}
+td:first-child{font-size:17px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro-esc);padding-top:24px}
+/* duas colunas */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.cols h3{font-weight:600;font-size:36px;color:var(--azul);padding-bottom:16px;border-bottom:2px solid var(--dourado);margin-bottom:24px}
+.cols li{font-size:28px}
+/* citação (sem assinatura) */
+.center{text-align:center;align-items:center}
+.q{font-size:200px;font-weight:500;line-height:.6;height:80px;margin-bottom:56px;color:var(--luz)}
+.light .q{color:var(--dourado)}
+.quote{font-weight:500;font-size:68px;line-height:1.25}
+.dark .quote{color:#fff} .light .quote{color:var(--azul)}
+.center .rule{margin:52px auto 48px}
+.center p{text-align:center}
+/* fechamento: seguir o perfil */
+.mono-big{width:124px;height:149px;margin:0 auto 52px}
+.dark .mono-big{color:var(--luz)} .light .mono-big{color:var(--azul)}
+.final h2{font-size:64px;text-align:center}
+.final p{text-align:center;font-size:33px;margin-top:36px}
+.handle{font-family:var(--sans);font-weight:500;font-size:30px;letter-spacing:.04em;margin-top:28px}
+.dark .handle{color:var(--luz)} .light .handle{color:var(--ouro-esc)}
+.btn{display:inline-block;font-weight:600;font-size:28px;letter-spacing:.3em;padding:30px 60px 30px 72px;margin:52px auto 0}
+.light .btn{background:var(--azul);color:#fff} .dark .btn{background:var(--luz);color:var(--azul)}
+.creci{font-size:21px!important;letter-spacing:.06em;margin-top:40px!important}
+.dark .creci{color:#9FAABD!important} .light .creci{color:#5E5646!important}
